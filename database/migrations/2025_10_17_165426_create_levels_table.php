@@ -15,6 +15,8 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('level')->unique();
             $table->string('code')->nullable()->unique();
+            $table->integer('colleg')->default(1);
+            $table->integer('lycee')->default(1);
             $table->enum('status',['0','1'])->default('1');
             $table->timestamps();
         });

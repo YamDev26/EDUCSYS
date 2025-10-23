@@ -1,462 +1,693 @@
 @extends('app')
 @section('title', 'dashboard')
 @section('content')
- <div class="container">
-
-    <!-- Row start -->
-    <div class="row gx-3">
-        <div class="col-xl-6 col-sm-12 col-12">
-        <div class="card mb-3">
-            <div class="card-body">
-            <!-- Row start -->
-            <div class="row">
-                <div class="col-sm-8 col-12">
-                    <h3 class="mb-3">Congratulations John 🎉</h3>
-                    <p class="w-50">
-                        You have resolved
-                        <span class="text-success fw-bold">85%</span> more
-                        tickets than last year.
-                    </p>
-                    <div id="tickets"></div>
-                </div>
-                <div class="col-sm-4 col-12">
-                    <div class="text-end">
-                        <img src="assets/images/sales.svg" class="img-150" alt="Bootstrap Gallery" />
+<div class="page-container">
+    {{-- <div class="row row-cols-xxl-4 row-cols-md-2 row-cols-1">
+        <div class="col">
+            <div class="card">
+                <div class="d-flex card-header justify-content-between align-items-center">
+                    <div>
+                        <h4 class="header-title">Total Sales</h4>
                     </div>
-                    <div class="mt-5 d-flex flex-wrap gap-3">
-                        <div class="d-flex align-items-center">
-                            <div class="icons-box md bg-info rounded-3 me-3">
-                                <i class="icon-add_task text-white fs-4"></i>
-                            </div>
-                            <div class="m-0">
-                                <h3 class="m-0 fw-semibold">960</h3>
-                                <p class="m-0 text-secondary">Resolved in 2024</p>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <div class="icons-box md bg-danger rounded-3 me-3">
-                                <i class="icon-add_task text-white fs-4"></i>
-                            </div>
-                            <div class="m-0">
-                                <h3 class="m-0 fw-semibold">630</h3>
-                                <p class="m-0 text-secondary">Resolved in 2023</p>
-                            </div>
+                    <div class="dropdown">
+                        <a href="#" class="dropdown-toggle drop-arrow-none card-drop" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="ri-more-2-fill fs-18"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <a href="javascript:void(0);" class="dropdown-item">Sales Report</a>
+                            <a href="javascript:void(0);" class="dropdown-item">Export Report</a>
+                            <a href="javascript:void(0);" class="dropdown-item">Revenue Analysis</a>
+                            <a href="javascript:void(0);" class="dropdown-item">Action</a>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- Row end -->
-            </div>
-        </div>
-        </div>
-        <div class="col-xl-3 col-sm-6 col-12">
-        <div class="card mb-3">
-            <div class="card-body">
-                <h5 class="card-title">Calls</h5>
-                <div id="calls"></div>
-            </div>
-        </div>
-        <div class="card mb-3">
-            <div class="card-body">
-            <div class="d-flex flex-row">
-                <div class="d-flex align-items-center">
-                    <div class="border border-info rounded-4 icons-box md">
-                        <i class="icon-support_agent text-info fs-3"></i>
+    
+                <div class="card-body pt-0">
+                    <div class="d-flex align-items-center gap-2 justify-content-between">
+                        <span class="badge bg-primary rounded-pill fs-13">45% <i class="ti ti-trending-up"></i> </span>
+                        <div class="text-end">
+                            <h3 class="fw-semibold">$7.8M</h3>
+                            <p class="text-muted mb-0">Since last month</p>
+                        </div>
                     </div>
-                    <div class="ms-2">
-                        <h3 class="m-0">49</h3>
-                        <p class="m-0 text-secondary">Agents Online</p>
+    
+                    <div class="progress progress-soft progress-sm mt-3">
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: 45%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                 </div>
-                <div class="ms-auto">
-                    <div id="sparkline1"></div>
+            </div>
+        </div>
+    
+        <div class="col">
+            <div class="card">
+                <div class="d-flex card-header justify-content-between align-items-center">
+                    <div>
+                        <h4 class="header-title">Total Revenue</h4>
+                    </div>
+                    <div class="dropdown">
+                        <a href="#" class="dropdown-toggle drop-arrow-none card-drop" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="ri-more-2-fill fs-18"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <a href="javascript:void(0);" class="dropdown-item">Sales Report</a>
+                            <a href="javascript:void(0);" class="dropdown-item">Export Report</a>
+                            <a href="javascript:void(0);" class="dropdown-item">Revenue Analysis</a>
+                            <a href="javascript:void(0);" class="dropdown-item">Action</a>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="card-body pt-0">
+                    <div class="d-flex align-items-center gap-2 justify-content-between">
+                        <span class="badge bg-success rounded-pill fs-13">28% <i class="ti ti-trending-up"></i> </span>
+                        <div class="text-end">
+                            <h3 class="fw-semibold">$12.4M</h3>
+                            <p class="text-muted mb-0">Since last month</p>
+                        </div>
+                    </div>
+    
+                    <div class="progress progress-soft progress-sm mt-3">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: 28%" aria-valuenow="28" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
                 </div>
             </div>
+        </div>
+    
+        <div class="col">
+            <div class="card">
+                <div class="d-flex card-header justify-content-between align-items-center">
+                    <div>
+                        <h4 class="header-title">New Customers</h4>
+                    </div>
+                    <div class="dropdown">
+                        <a href="#" class="dropdown-toggle drop-arrow-none card-drop" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="ri-more-2-fill fs-18"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <a href="javascript:void(0);" class="dropdown-item">Customer Insights</a>
+                            <a href="javascript:void(0);" class="dropdown-item">Export Data</a>
+                            <a href="javascript:void(0);" class="dropdown-item">Retention Rate</a>
+                            <a href="javascript:void(0);" class="dropdown-item">Action</a>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="card-body pt-0">
+                    <div class="d-flex align-items-center gap-2 justify-content-between">
+                        <span class="badge bg-warning rounded-pill fs-13">18% <i class="ti ti-trending-up"></i> </span>
+                        <div class="text-end">
+                            <h3 class="fw-semibold">1.2K</h3>
+                            <p class="text-muted mb-0">Since last month</p>
+                        </div>
+                    </div>
+    
+                    <div class="progress progress-soft progress-sm mt-3">
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: 18%" aria-valuenow="18" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
             </div>
         </div>
-        </div>
-        <div class="col-xl-3 col-sm-6 col-12">
-        <div class="card mb-3">
-            <div class="card-body">
-                <h5 class="card-title">Tickets Resolved</h5>
-                <div id="callsByCountry" class="auto-align-graph"></div>
+    
+        <div class="col">
+            <div class="card">
+                <div class="d-flex card-header justify-content-between align-items-center">
+                    <div>
+                        <h4 class="header-title">Conversion Rate</h4>
+                    </div>
+                    <div class="dropdown">
+                        <a href="#" class="dropdown-toggle drop-arrow-none card-drop" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="ri-more-2-fill fs-18"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <a href="javascript:void(0);" class="dropdown-item">Performance Report</a>
+                            <a href="javascript:void(0);" class="dropdown-item">Export Data</a>
+                            <a href="javascript:void(0);" class="dropdown-item">Improve Rate</a>
+                            <a href="javascript:void(0);" class="dropdown-item">Action</a>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="card-body pt-0">
+                    <div class="d-flex align-items-center gap-2 justify-content-between">
+                        <span class="badge bg-info rounded-pill fs-13">3.2% <i class="ti ti-trending-down"></i> </span>
+                        <div class="text-end">
+                            <h3 class="fw-semibold">7.5%</h3>
+                            <p class="text-muted mb-0">Since last month</p>
+                        </div>
+                    </div>
+    
+                    <div class="progress progress-soft progress-sm mt-3">
+                        <div class="progress-bar bg-info" role="progressbar" style="width: 7.5%" aria-valuenow="7.5" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
             </div>
         </div>
+    </div> --}}
+    
+    {{-- <div class="row row-cols-xxl-5 row-cols-md-2 row-cols-1">
+        <div class="col">
+            <div class="card">
+                <div class="card-body d-flex align-items-center gap-2">
+                    <img src="assets/images/users/avatar-7.jpg" alt="team-member-image" class="me-1 avatar-xl img-thumbnail rounded-circle">
+                    <div>
+                        <h5>John Smith</h5>
+                        <p class="text-muted">Project Manager</p>
+                        <p class="m-0 fs-14">80+ Feedbacks <a href="#!" class="link-reset fw-medium"><i class="ti ti-arrow-right"></i></a></p>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-    <!-- Row end -->
 
-    <!-- Row start -->
-    <div class="row gx-3">
-        <div class="col-lg-12 col-12">
-        <div class="card mb-3">
-            <div class="card-header">
-                <h5 class="card-title">Tickets</h5>
-            </div>
-            <div class="card-body">
-            <div class="table-outer">
-                <div class="table-responsive">
-                <table class="table truncate align-middle">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Type</th>
-                        <th>Status</th>
-                        <th>Tags</th>
-                        <th>Created Date</th>
-                        <th>Last Reply</th>
-                        <th>Priority</th>
-                        <th>Department</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Alignment UI issue fix</td>
-                        <td><span class="badge bg-danger">In Progress</span></td>
-                        <td>
-                        <span class="badge border border-danger text-danger">Bug</span>
-                        <span class="badge border border-danger text-danger">Design</span>
-                        </td>
-                        <td>2023/04/25</td>
-                        <td>2 mins ago</td>
-                        <td><span class="badge bg-danger">High</span></td>
-                        <td>Sales</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Responsive Design Issues Fix</td>
-                        <td><span class="badge bg-dark">Not Started</span></td>
-                        <td>
-                        <span class="badge border border-danger text-danger">Sales</span>
-                        <span class="badge border border-danger text-danger">Testing</span>
-                        </td>
-                        <td>2023/02/12</td>
-                        <td>7 mins ago</td>
-                        <td><span class="badge bg-danger">Medium</span></td>
-                        <td>Support</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Unit Testing</td>
-                        <td><span class="badge bg-danger">Feedback</span></td>
-                        <td>
-                        <span class="badge border border-danger text-danger">Fix</span>
-                        <span class="badge border border-danger text-danger">Sales</span>
-                        </td>
-                        <td>2023/03/16</td>
-                        <td>12 mins ago</td>
-                        <td><span class="badge bg-danger">Low</span></td>
-                        <td>Development</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>Validations</td>
-                        <td><span class="badge bg-danger">In Progress</span></td>
-                        <td>
-                        <span class="badge border border-danger text-danger">Bug</span>
-                        <span class="badge border border-dark text-dark">Development</span>
-                        </td>
-                        <td>2023/04/25</td>
-                        <td>45 mins ago</td>
-                        <td><span class="badge bg-danger">High</span></td>
-                        <td>Sales</td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>Testing and UI Issues Fix</td>
-                        <td><span class="badge bg-danger">Testing</span></td>
-                        <td>
-                        <span class="badge border border-danger text-danger">Validation</span>
-                        <span class="badge border border-danger text-danger">Fix</span>
-                        </td>
-                        <td>2023/02/12</td>
-                        <td>58 mins ago</td>
-                        <td><span class="badge bg-dark">Low</span></td>
-                        <td>Support</td>
-                    </tr>
-                    </tbody>
-                </table>
+        <div class="col">
+            <div class="card">
+                <div class="card-body d-flex align-items-center gap-2">
+                    <img src="assets/images/users/avatar-4.jpg" alt="team-member-image" class="me-1 avatar-xl img-thumbnail rounded-circle">
+                    <div>
+                        <h5>Jane Doe</h5>
+                        <p class="text-muted">UI/UX Designer</p>
+                        <p class="m-0 fs-14">90+ Feedbacks <a href="#!" class="link-reset fw-medium"><i class="ti ti-arrow-right"></i></a></p>
+                    </div>
                 </div>
             </div>
-            </div>
         </div>
-        </div>
-    </div>
-    <!-- Row end -->
 
-    <!-- Row start -->
-    <div class="row gx-3">
-        <div class="col-12">
-        <div class="card mb-3">
-            <div class="card-body">
-            <!-- Row start -->
-            <div class="row g-4">
-                <div class="px-0 border-end col-xl-3 col-sm-6">
-                <div class="text-center">
-                    <p class="m-0 small">Gross Profit</p>
-                    <h3 class="my-2">75%</h3>
-                    <p class="m-0 small">
-                    <span class="badge bg-danger me-1">
-                        <i class="bi bi-arrow-down-left-square"></i>
-                        1.99%</span>
-                    for Last month
-                    </p>
-                </div>
-                </div>
-                <div class="px-0 border-end col-xl-3 col-sm-6">
-                <div class="text-center">
-                    <p class="m-0 small">Opex Ratio</p>
-                    <h3 class="my-2">62%</h3>
-                    <p class="m-0 small">
-                    <span class="badge bg-danger me-1">
-                        <i class="bi bi-arrow-up-right-square"></i>
-                        1.69%</span>
-                    for Last month
-                    </p>
-                </div>
-                </div>
-                <div class="px-0 border-end col-xl-3 col-sm-6">
-                <div class="text-center">
-                    <p class="m-0 small">
-                    Operating Profit
-                    </p>
-                    <h3 class="my-2">48%</h3>
-                    <p class="m-0 small">
-                    <span class="badge bg-danger me-1">
-                        <i class="bi bi-arrow-up-right-square"></i>
-                        2.9%</span>
-                    for Last month
-                    </p>
-                </div>
-                </div>
-                <div class="px-0 col-xl-3 col-sm-6">
-                <div class="text-center">
-                    <p class="m-0 small">Net Profit</p>
-                    <h3 class="my-2">32%</h3>
-                    <p class="m-0 small">
-                    <span class="badge bg-dark me-1">
-                        <i class="bi bi-arrow-up-right-square"></i>
-                        18.5%</span>
-                    for Last month
-                    </p>
-                </div>
+        <div class="col">
+            <div class="card">
+                <div class="card-body d-flex align-items-center gap-2">
+                    <img src="assets/images/users/avatar-5.jpg" alt="team-member-image" class="me-1 avatar-xl img-thumbnail rounded-circle">
+                    <div>
+                        <h5>Emily Brown</h5>
+                        <p class="text-muted">Software Engineer</p>
+                        <p class="m-0 fs-14">100+ Feedbacks <a href="#!" class="link-reset fw-medium"><i class="ti ti-arrow-right"></i></a></p>
+                    </div>
                 </div>
             </div>
-            <!-- Row end -->
-            </div>
         </div>
-        </div>
-    </div>
-    <!-- Row end -->
 
-    <!-- Row start -->
-    <div class="row gx-3">
-        <div class="col-lg-12 col-12">
-        <div class="card mb-3">
-            <div class="card-header">
-            <h5 class="card-title">Tasks</h5>
-            </div>
-            <div class="card-body">
-            <div id="tasks"></div>
+        <div class="col">
+            <div class="card">
+                <div class="card-body d-flex align-items-center gap-2">
+                    <img src="assets/images/users/avatar-6.jpg" alt="team-member-image" class="me-1 avatar-xl img-thumbnail rounded-circle">
+                    <div>
+                        <h5>Mark Wilson</h5>
+                        <p class="text-muted">Marketing Specialist</p>
+                        <p class="m-0 fs-14">70+ Feedbacks <a href="#!" class="link-reset fw-medium"><i class="ti ti-arrow-right"></i></a></p>
+                    </div>
+                </div>
             </div>
         </div>
-        </div>
-    </div>
-    <!-- Row end -->
 
-    <!-- Row start -->
-    <div class="row gx-3">
-        <div class="col-lg-6 col-12">
-        <div class="card mb-3">
-            <div class="card-header">
-            <h5 class="card-title">Priority</h5>
-            </div>
-            <div class="card-body">
-            <div id="ticketsData"></div>
-            </div>
-        </div>
-        </div>
-        <div class="col-lg-6 col-12">
-        <div class="card mb-3">
-            <div class="card-header">
-            <h5 class="card-title">Avg. Response Time</h5>
-            </div>
-            <div class="card-body">
-            <div id="avgTimeData"></div>
+        <div class="col">
+            <div class="card">
+                <div class="card-body d-flex align-items-center gap-2">
+                    <img src="assets/images/users/avatar-3.jpg" alt="team-member-image" class="me-1 avatar-xl img-thumbnail rounded-circle">
+                    <div>
+                        <h5>Sara Johnson</h5>
+                        <p class="text-muted">Data Analyst</p>
+                        <p class="m-0 fs-14">50+ Feedbacks <a href="#!" class="link-reset fw-medium"><i class="ti ti-arrow-right"></i></a></p>
+                    </div>
+                </div>
             </div>
         </div>
-        </div>
-    </div>
-    <!-- Row end -->
+    </div> --}}
 
-    <!-- Row start -->
-    <div class="row gx-3">
-        <div class="col-sm-3 col-12">
-        <div class="card mb-3">
-            <div class="card-body">
-            <div class="d-flex mb-2">
-                <div class="icons-box md bg-primary rounded-5 me-3">
-                <i class="icon-add_task fs-4 text-white"></i>
-                </div>
-                <div class="d-flex flex-column">
-                <h2 class="m-0 lh-1">18</h2>
-                <p class="m-0 opacity-50">Tickets</p>
-                </div>
-            </div>
-            <div class="m-0">
-                <div class="progress thin mb-2">
-                <div class="progress-bar bg-primary" role="progressbar" style="width: 60%" aria-valuenow="60"
-                    aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <p class="m-0 small fw-light opacity-75">60 percent completed.</p>
-            </div>
-            </div>
-        </div>
-        </div>
-        <div class="col-sm-3 col-12">
-        <div class="card mb-3">
-            <div class="card-body">
-            <div class="d-flex mb-2">
-                <div class="icons-box md bg-info rounded-5 me-3">
-                <i class="icon-add_task fs-4 text-white"></i>
-                </div>
-                <div class="d-flex flex-column">
-                <h2 class="m-0 lh-1">09</h2>
-                <p class="m-0 opacity-50">InProgress</p>
-                </div>
-            </div>
-            <div class="m-0">
-                <div class="progress thin mb-2">
-                <div class="progress-bar bg-info" role="progressbar" style="width: 70%" aria-valuenow="70"
-                    aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <p class="m-0 small fw-light opacity-75">70 percent completed.</p>
-            </div>
-            </div>
-        </div>
-        </div>
-        <div class="col-sm-3 col-12">
-        <div class="card mb-3">
-            <div class="card-body">
-            <div class="d-flex mb-2">
-                <div class="icons-box md bg-danger rounded-5 me-3">
-                <i class="icon-add_task fs-4 text-white"></i>
-                </div>
-                <div class="d-flex flex-column">
-                <h2 class="m-0 lh-1">07</h2>
-                <p class="m-0 opacity-50">On Hold</p>
-                </div>
-            </div>
-            <div class="m-0">
-                <div class="progress thin mb-2">
-                <div class="progress-bar bg-danger" role="progressbar" style="width: 80%" aria-valuenow="80"
-                    aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <p class="m-0 small fw-light opacity-75">80 percent completed.</p>
-            </div>
-            </div>
-        </div>
-        </div>
-        <div class="col-sm-3 col-12">
-        <div class="card mb-3">
-            <div class="card-body">
-            <div class="d-flex mb-2">
-                <div class="icons-box md bg-success rounded-5 me-3">
-                <i class="icon-add_task fs-4 text-white"></i>
-                </div>
-                <div class="d-flex flex-column">
-                <h2 class="m-0 lh-1">45</h2>
-                <p class="m-0 opacity-50">Completed</p>
-                </div>
-            </div>
-            <div class="m-0">
-                <div class="progress thin mb-2">
-                <div class="progress-bar bg-success" role="progressbar" style="width: 90%" aria-valuenow="90"
-                    aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <p class="m-0 small fw-light opacity-75">90 percent completed.</p>
-            </div>
-            </div>
-        </div>
-        </div>
-    </div>
 
-    <div class="row gx-3">
-        <div class="col-lg-3 col-sm-6 col-12">
-        <div class="card mb-3">
-            <div class="card-header">
-            <h5 class="card-title">Today's Tickets</h5>
-            </div>
-            <div class="card-body">
-            <i class="icon-stacked_line_chart display-3 opacity-25 position-absolute end-0 top-0 me-3"></i>
-            <div class="d-flex justify-content-between mb-2">
-                <span>Completed</span>
-                <span class="fw-bold">50%</span>
-            </div>
-            <div class="progress small">
-                <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50"
-                aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-            </div>
+    {{-- <div class="row">
+        <div class="col-xxl-6">
+            <div class="card">
+                <div class="d-flex card-header justify-content-between align-items-center">
+                    <h4 class="header-title">Brands Listing</h4>
+                    <a href="javascript:void(0);" class="btn btn-sm btn-primary">Add Brand <i class="ti ti-plus ms-1"></i></a>
+                </div>
+                <div class="card-body p-0">
+                    <div class="bg-light bg-opacity-50 py-1 text-center">
+                        <p class="m-0"><b>75</b> Active brands out of <span class="fw-medium">120</span></p>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-custom table-centered table-sm table-nowrap table-hover mb-0">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="avatar-md flex-shrink-0 me-2">
+                                                <span class="avatar-title bg-primary-subtle rounded-circle">
+                                                    <img src="assets/images/products/logo/logo-1.svg" alt="" height="22">
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <span class="text-muted fs-12">Electronics</span> <br />
+                                                <h5 class="fs-14 mt-1">TechNova - Germany</h5>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="text-muted fs-12">Established</span>
+                                        <h5 class="fs-14 mt-1 fw-normal">Since 2015</h5>
+                                    </td>
+                                    <td>
+                                        <span class="text-muted fs-12">Stores</span> <br />
+                                        <h5 class="fs-14 mt-1 fw-normal">1,200</h5>
+                                    </td>
+                                    <td>
+                                        <span class="text-muted fs-12">Products</span>
+                                        <h5 class="fs-14 mt-1 fw-normal">15,320</h5>
+                                    </td>
+                                    <td>
+                                        <span class="text-muted fs-12">Status</span>
+                                        <h5 class="fs-14 mt-1 fw-normal"><i class="ti ti-circle-filled fs-12 text-success"></i> Active
+                                        </h5>
+                                    </td>
+                                    <td style="width: 30px;">
+                                        <div class="dropdown">
+                                            <a href="#" class="dropdown-toggle text-muted drop-arrow-none card-drop p-0" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="ti ti-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <a href="javascript:void(0);" class="dropdown-item">Refresh
+                                                    Report</a>
+                                                <a href="javascript:void(0);" class="dropdown-item">Export
+                                                    Report</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="avatar-md flex-shrink-0 me-2">
+                                                <span class="avatar-title bg-info-subtle rounded-circle">
+                                                    <img src="assets/images/products/logo/logo-2.svg" alt="" height="22">
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <span class="text-muted fs-12">Home Decor</span> <br />
+                                                <h5 class="fs-14 mt-1">DecoLux - France</h5>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="text-muted fs-12">Established</span>
+                                        <h5 class="fs-14 mt-1 fw-normal">Since 2000</h5>
+                                    </td>
+                                    <td>
+                                        <span class="text-muted fs-12">Stores</span> <br />
+                                        <h5 class="fs-14 mt-1 fw-normal">450</h5>
+                                    </td>
+                                    <td>
+                                        <span class="text-muted fs-12">Products</span>
+                                        <h5 class="fs-14 mt-1 fw-normal">6,800</h5>
+                                    </td>
+                                    <td>
+                                        <span class="text-muted fs-12">Status</span>
+                                        <h5 class="fs-14 mt-1 fw-normal"><i class="ti ti-circle-filled fs-12 text-warning"></i> Pending
+                                        </h5>
+                                    </td>
+                                    <td style="width: 30px;">
+                                        <div class="dropdown">
+                                            <a href="#" class="dropdown-toggle text-muted drop-arrow-none card-drop p-0" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="ti ti-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <a href="javascript:void(0);" class="dropdown-item">Refresh
+                                                    Report</a>
+                                                <a href="javascript:void(0);" class="dropdown-item">Export
+                                                    Report</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="avatar-md flex-shrink-0 me-2">
+                                                <span class="avatar-title bg-primary-subtle rounded-circle">
+                                                    <img src="assets/images/products/logo/logo-3.svg" alt="" height="22">
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <span class="text-muted fs-12">Technology</span> <br />
+                                                <h5 class="fs-14 mt-1">InnovTech - Japan</h5>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="text-muted fs-12">Established</span>
+                                        <h5 class="fs-14 mt-1 fw-normal">Since 2012</h5>
+                                    </td>
+                                    <td>
+                                        <span class="text-muted fs-12">Stores</span> <br />
+                                        <h5 class="fs-14 mt-1 fw-normal">850</h5>
+                                    </td>
+                                    <td>
+                                        <span class="text-muted fs-12">Products</span>
+                                        <h5 class="fs-14 mt-1 fw-normal">12,500</h5>
+                                    </td>
+                                    <td>
+                                        <span class="text-muted fs-12">Status</span>
+                                        <h5 class="fs-14 mt-1 fw-normal"><i class="ti ti-circle-filled fs-12 text-success"></i> Active
+                                        </h5>
+                                    </td>
+                                    <td style="width: 30px;">
+                                        <div class="dropdown">
+                                            <a href="#" class="dropdown-toggle text-muted drop-arrow-none card-drop p-0" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="ti ti-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <a href="javascript:void(0);" class="dropdown-item">Refresh
+                                                    Report</a>
+                                                <a href="javascript:void(0);" class="dropdown-item">Export
+                                                    Report</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="avatar-md flex-shrink-0 me-2">
+                                                <span class="avatar-title bg-secondary-subtle rounded-circle">
+                                                    <img src="assets/images/products/logo/logo-4.svg" alt="" height="22">
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <span class="text-muted fs-12">Health</span> <br />
+                                                <h5 class="fs-14 mt-1">WellCare - UK</h5>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="text-muted fs-12">Established</span>
+                                        <h5 class="fs-14 mt-1 fw-normal">Since 2008</h5>
+                                    </td>
+                                    <td>
+                                        <span class="text-muted fs-12">Stores</span> <br />
+                                        <h5 class="fs-14 mt-1 fw-normal">300</h5>
+                                    </td>
+                                    <td>
+                                        <span class="text-muted fs-12">Products</span>
+                                        <h5 class="fs-14 mt-1 fw-normal">4,200</h5>
+                                    </td>
+                                    <td>
+                                        <span class="text-muted fs-12">Status</span>
+                                        <h5 class="fs-14 mt-1 fw-normal"><i class="ti ti-circle-filled fs-12 text-success"></i> Active
+                                        </h5>
+                                    </td>
+                                    <td style="width: 30px;">
+                                        <div class="dropdown">
+                                            <a href="#" class="dropdown-toggle text-muted drop-arrow-none card-drop p-0" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="ti ti-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <a href="javascript:void(0);" class="dropdown-item">Refresh
+                                                    Report</a>
+                                                <a href="javascript:void(0);" class="dropdown-item">Export
+                                                    Report</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="avatar-md flex-shrink-0 me-2">
+                                                <span class="avatar-title bg-danger-subtle rounded-circle">
+                                                    <img src="assets/images/products/logo/logo-5.svg" alt="" height="22">
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <span class="text-muted fs-12">Automotive</span> <br />
+                                                <h5 class="fs-14 mt-1">AutoDrive - USA</h5>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="text-muted fs-12">Established</span>
+                                        <h5 class="fs-14 mt-1 fw-normal">Since 1999</h5>
+                                    </td>
+                                    <td>
+                                        <span class="text-muted fs-12">Stores</span> <br />
+                                        <h5 class="fs-14 mt-1 fw-normal">600</h5>
+                                    </td>
+                                    <td>
+                                        <span class="text-muted fs-12">Products</span>
+                                        <h5 class="fs-14 mt-1 fw-normal">8,900</h5>
+                                    </td>
+                                    <td>
+                                        <span class="text-muted fs-12">Status</span>
+                                        <h5 class="fs-14 mt-1 fw-normal"><i class="ti ti-circle-filled fs-12 text-danger"></i> Inactive
+                                        </h5>
+                                    </td>
+                                    <td style="width: 30px;">
+                                        <div class="dropdown">
+                                            <a href="#" class="dropdown-toggle text-muted drop-arrow-none card-drop p-0" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="ti ti-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <a href="javascript:void(0);" class="dropdown-item">Refresh
+                                                    Report</a>
+                                                <a href="javascript:void(0);" class="dropdown-item">Export
+                                                    Report</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- Additional rows with new data -->
+                            </tbody>
+                        </table>
+                    </div> <!-- end table-responsive-->
+                </div> <!-- end card-body-->
+
+                <div class="card-footer">
+                    <div class="align-items-center justify-content-between row text-center text-sm-start">
+                        <div class="col-sm">
+                            <div class="text-muted">
+                                Showing <span class="fw-semibold">5</span> of <span class="fw-semibold">20</span> Results
+                            </div>
+                        </div>
+                        <div class="col-sm-auto mt-3 mt-sm-0">
+                            <ul class="pagination pagination-boxed pagination-sm mb-0 justify-content-center">
+                                <li class="page-item disabled">
+                                    <a href="#" class="page-link"><i class="ti ti-chevron-left"></i></a>
+                                </li>
+                                <li class="page-item active">
+                                    <a href="#" class="page-link">1</a>
+                                </li>
+                                <li class="page-item">
+                                    <a href="#" class="page-link">2</a>
+                                </li>
+                                <li class="page-item">
+                                    <a href="#" class="page-link">3</a>
+                                </li>
+                                <li class="page-item">
+                                    <a href="#" class="page-link"><i class="ti ti-chevron-right"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div> <!-- -->
+                </div>
+
+            </div> <!-- end card-->
         </div>
+
+        <div class="col-xxl-6">
+            <div class="card card-h-100">
+                <div class="card-header d-flex flex-wrap align-items-center gap-2 border-bottom border-dashed">
+                    <h4 class="header-title me-auto">Top Selling Products</h4>
+
+                    <div class="d-flex gap-2 justify-content-end text-end">
+                        <a href="javascript:void(0);" class="btn btn-sm btn-light">Import <i class="ti ti-download ms-1"></i></a>
+                        <a href="javascript:void(0);" class="btn btn-sm btn-primary">Export <i class="ti ti-file-export ms-1"></i></a>
+                    </div>
+                </div>
+
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-custom align-middle table-nowrap table-hover mb-0">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 85px;">
+                                        <div class="avatar-lg border rounded">
+                                            <img src="assets/images/products/p-1.png" alt="Product-10" class="img-fluid rounded-2">
+                                        </div>
+                                    </td>
+                                    <td class="ps-0">
+                                        <h5 class="fs-14 my-1"><a href="#!" class="link-reset">Modern Desk
+                                                Lamp</a></h5>
+                                        <span class="text-muted fs-12">15 April 2024</span>
+                                    </td>
+                                    <td>
+                                        <h5 class="fs-14 my-1">$45.99</h5>
+                                        <span class="text-muted fs-12">Price</span>
+                                    </td>
+                                    <td>
+                                        <h5 class="fs-14 my-1">120</h5>
+                                        <span class="text-muted fs-12">Quantity</span>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center justify-content-end">
+                                            <div class="me-2">
+                                                <h5 class="fs-14 my-1">$5,518.80</h5>
+                                                <span class="text-muted fs-12">Amount</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 85px;">
+                                        <div class="avatar-lg border rounded">
+                                            <img src="assets/images/products/p-2.png" alt="Product-11" class="img-fluid rounded-2">
+                                        </div>
+                                    </td>
+                                    <td class="ps-0">
+                                        <h5 class="fs-14 my-1"><a href="#!" class="link-reset">Vintage
+                                                Wooden Chair</a></h5>
+                                        <span class="text-muted fs-12">10 April 2024</span>
+                                    </td>
+                                    <td>
+                                        <h5 class="fs-14 my-1">$99.00</h5>
+                                        <span class="text-muted fs-12">Price</span>
+                                    </td>
+                                    <td>
+                                        <h5 class="fs-14 my-1">80</h5>
+                                        <span class="text-muted fs-12">Quantity</span>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center justify-content-end">
+                                            <div class="me-2">
+                                                <h5 class="fs-14 my-1">$7,920.00</h5>
+                                                <span class="text-muted fs-12">Amount</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 85px;">
+                                        <div class="avatar-lg border rounded">
+                                            <img src="assets/images/products/p-3.png" alt="Product-12" class="img-fluid rounded-2">
+                                        </div>
+                                    </td>
+                                    <td class="ps-0">
+                                        <h5 class="fs-14 my-1"><a href="#!" class="link-reset">Wireless
+                                                Keyboard</a></h5>
+                                        <span class="text-muted fs-12">05 April 2024</span>
+                                    </td>
+                                    <td>
+                                        <h5 class="fs-14 my-1">$29.99</h5>
+                                        <span class="text-muted fs-12">Price</span>
+                                    </td>
+                                    <td>
+                                        <h5 class="fs-14 my-1">150</h5>
+                                        <span class="text-muted fs-12">Quantity</span>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center justify-content-end">
+                                            <div class="me-2">
+                                                <h5 class="fs-14 my-1">$4,498.50</h5>
+                                                <span class="text-muted fs-12">Amount</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 85px;">
+                                        <div class="avatar-lg border rounded">
+                                            <img src="assets/images/products/p-4.png" alt="Product-13" class="img-fluid rounded-2">
+                                        </div>
+                                    </td>
+                                    <td class="ps-0">
+                                        <h5 class="fs-14 my-1"><a href="#!" class="link-reset">Bluetooth
+                                                Speaker</a></h5>
+                                        <span class="text-muted fs-12">02 April 2024</span>
+                                    </td>
+                                    <td>
+                                        <h5 class="fs-14 my-1">$65.00</h5>
+                                        <span class="text-muted fs-12">Price</span>
+                                    </td>
+                                    <td>
+                                        <h5 class="fs-14 my-1">90</h5>
+                                        <span class="text-muted fs-12">Quantity</span>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center justify-content-end">
+                                            <div class="me-2">
+                                                <h5 class="fs-14 my-1">$5,850.00</h5>
+                                                <span class="text-muted fs-12">Amount</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 85px;">
+                                        <div class="avatar-lg border rounded">
+                                            <img src="assets/images/products/p-5.png" alt="Product-14" class="img-fluid rounded-2">
+                                        </div>
+                                    </td>
+                                    <td class="ps-0">
+                                        <h5 class="fs-14 my-1"><a href="#!" class="link-reset">Classic Table
+                                                Lamp</a></h5>
+                                        <span class="text-muted fs-12">29 March 2024</span>
+                                    </td>
+                                    <td>
+                                        <h5 class="fs-14 my-1">$42.50</h5>
+                                        <span class="text-muted fs-12">Price</span>
+                                    </td>
+                                    <td>
+                                        <h5 class="fs-14 my-1">110</h5>
+                                        <span class="text-muted fs-12">Quantity</span>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center justify-content-end">
+                                            <div class="me-2">
+                                                <h5 class="fs-14 my-1">$4,675.00</h5>
+                                                <span class="text-muted fs-12">Amount</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div> <!-- end table-responsive-->
+                </div> <!-- end card-body-->
+
+                <div class="card-footer">
+                    <div class="align-items-center justify-content-between row text-center text-sm-start">
+                        <div class="col-sm">
+                            <div class="text-muted">
+                                Showing <span class="fw-semibold">5</span> of <span class="fw-semibold">10</span> Results
+                            </div>
+                        </div>
+                        <div class="col-sm-auto mt-3 mt-sm-0">
+                            <ul class="pagination pagination-boxed pagination-sm mb-0 justify-content-center">
+                                <li class="page-item disabled">
+                                    <a href="#" class="page-link"><i class="ti ti-chevron-left"></i></a>
+                                </li>
+                                <li class="page-item active">
+                                    <a href="#" class="page-link">1</a>
+                                </li>
+                                <li class="page-item">
+                                    <a href="#" class="page-link">2</a>
+                                </li>
+                                <li class="page-item">
+                                    <a href="#" class="page-link"><i class="ti ti-chevron-right"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div> <!-- -->
+                </div>
+            </div> <!-- end card-->
         </div>
-        <div class="col-lg-3 col-sm-6 col-12">
-        <div class="card mb-3">
-            <div class="card-header">
-            <h5 class="card-title">New</h5>
-            </div>
-            <div class="card-body">
-            <i class="icon-stacked_line_chart display-3 opacity-25 position-absolute end-0 top-0 me-3"></i>
-            <div class="d-flex justify-content-between mb-2">
-                <span>Assigned</span>
-                <span class="fw-bold">70%</span>
-            </div>
-            <div class="progress small">
-                <div class="progress-bar bg-info" role="progressbar" style="width: 70%" aria-valuenow="70"
-                aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-            </div>
-        </div>
-        </div>
-        <div class="col-lg-3 col-sm-6 col-12">
-        <div class="card mb-3">
-            <div class="card-header">
-            <h5 class="card-title">Closed</h5>
-            </div>
-            <div class="card-body">
-            <i class="icon-stacked_line_chart display-3 opacity-25 position-absolute end-0 top-0 me-3"></i>
-            <div class="d-flex justify-content-between mb-2">
-                <span>Overall</span>
-                <span class="fw-bold">90%</span>
-            </div>
-            <div class="progress small">
-                <div class="progress-bar bg-info" role="progressbar" style="width: 90%" aria-valuenow="90"
-                aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-            </div>
-        </div>
-        </div>
-        <div class="col-lg-3 col-sm-6 col-12">
-        <div class="card mb-3">
-            <div class="card-header">
-            <h5 class="card-title">Completed</h5>
-            </div>
-            <div class="card-body">
-            <i class="icon-stacked_line_chart display-3 opacity-25 position-absolute end-0 top-0 me-3"></i>
-            <div class="d-flex justify-content-between mb-2">
-                <span>Done</span>
-                <span class="fw-bold">100%</span>
-            </div>
-            <div class="progress small">
-                <div class="progress-bar bg-danger" role="progressbar" style="width: 100%" aria-valuenow="100"
-                aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-            </div>
-        </div>
-        </div>
-    </div>
-    <!-- Row end -->
+    </div> --}}
 
 </div>
+@endsection
+@section('script')
+<script src="{{ asset('assets/js/pages/dashboard.js') }}"></script>
+
+
 @endsection
