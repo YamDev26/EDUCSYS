@@ -86,7 +86,9 @@
                                     <h4 class="header-title me-auto">Top Selling</h4>
 
                                     <div class="d-flex gap-2 justify-content-end text-end">
-                                        <a href="{{ route('payement.pdf',$data['id']) }}" target="_blank" class="btn btn-sm btn-light">Import <i class="ti ti-download ms-1"></i></a>
+                                        @if (count($dts))
+                                            <a href="{{ route('payement.pdf',$data['id']) }}" target="_blank" class="btn btn-sm btn-light">Import <i class="ti ti-download ms-1"></i></a>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="card-body p-0">
