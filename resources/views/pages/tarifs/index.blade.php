@@ -47,7 +47,7 @@
                         </thead>
                         <tbody>
                             @php $i = 1 @endphp
-                            @forelse ($tarifs as $item)
+                            @foreach ($tarifs as $item)
                             <tr>
                                 <th class="text-center">{{ $i <= 9 ? '0'.$i++:$i++ }}</th>
                                 <td>{{ ucwords($item['libelle']) }}</td>
@@ -74,11 +74,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            @empty
-                            <tr>
-                                <td colspan="8" class="text-center">Aucune donnée trouvée</td>
-                            </tr>
-                            @endforelse
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

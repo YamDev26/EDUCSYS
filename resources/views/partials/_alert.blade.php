@@ -1,4 +1,4 @@
-<div class="col-md-8 offset-xxl-2">
+<div class="col-12 col-md-8 offset-md-2">
     @if (session('msg') && session('str') == 'danger')
     <div class="alert alert-danger text-bg-danger alert-dismissible d-flex align-items-center" role="alert">
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>

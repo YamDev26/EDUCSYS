@@ -24,7 +24,7 @@
                    <div class="d-flex justify-content-between">
                         <div class="card-title pb-0" style="font-size: 19px;">Gestion Payements</div>
                         <div class="btn-group" role="group" aria-label="Basic example">
-                            <a  href="javascript:void(0);" class="btn btn-outline-dark">View</a>
+                            <a  href="#" class="btn btn-outline-dark">View</a>
                             <a href="{{ route('dashboard') }}" type="button" class="btn btn-outline-dark">Back</a>
                         </div>
                    </div>

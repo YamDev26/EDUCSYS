@@ -60,7 +60,7 @@
 
             <li class="side-nav-item {{ request()->is('parametre/*') ? 'active' : '' }}">
                 <a href="{{ route('tarif.index') }}" class="side-nav-link">
-                    <span class="menu-icon"><i class="ti ti-mailbox"></i></span>
+                    <span class="menu-icon"><i class="ti ti-list-details"></i></span>
                     <span class="menu-text">Parametres</span>
                 </a>
             </li>

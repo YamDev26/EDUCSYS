@@ -40,7 +40,7 @@ class PayementController extends Controller
             $str = explode('_', $id);
             if(sizeof($str) == 2){
                 $student = CentreStudent::find($str[0]);
-                $dts = Payement::where('id', $str[1])->get();
+                $dts = Payement::where('id', $str[1])->orderBy('created_at', 'desc')->get();
             }
             else{
                 $student = CentreStudent::find($id);
@@ -136,9 +136,20 @@ class PayementController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function listView()
     {
-        //
+        try{
+            $datas = Payement::where('school_year_id', $this->year())->orderBy('created_at', 'desc')->paginate(10);
+            return view('pages.payements.list', [
+                'datas' => $datas
+            ]);
+        }
+        catch (\Exception $e) {
+            return back()->with([
+                'str' => 'danger',
+                'msg' => 'Une erreur est survenue !'
+            ]);
+        }
     }
 
     /**

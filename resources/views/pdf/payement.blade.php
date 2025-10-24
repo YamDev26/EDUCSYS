@@ -65,18 +65,19 @@
                     <tr style="margin-bottom: 0%">
                         <td style="width: 50%; border:none">
                             <div style="text-align: center; font-size: 13px">
-                                <b>MINISTERE DE L'EDUCATION NATIONALE <br> ET L'ALPHABETISATION</b> 
+                                <b>REPUBLIQUE DE COTE D'IVOIRE</b><br>
+                                <i>Union - Discipline - Travail</i>
                                 <hr style="width: 50%; margin: 10px auto; border: 1px dotted black">
-                                <b>DIRECTION DE LA PEDAGOGIE <br> ET DE LA FORMATION CONTINUE</b>
+                                <hr style="width: 30%; margin: 10px auto; border: 1px dotted black">
+                                <hr style="width: 20%; margin: 0px auto; border: 1px dotted black">
+                                <i style="font-size: 11px">N° {{ random_int(100, 1000).' - 01' }}</i>
                             </div>
                         </td>
                         <td style="width: 50%; border:none">
                             <div style="text-align: center; font-size: 13px;">
-                                <b>REPUBLIQUE DE COTE D'IVOIRE</b><br>
-                                <i>Union - Discipline - Travail</i>
-                                <hr style="width: 50%; margin: 10px auto; border: 1px dotted black">
-                                <b style="font-size: 14px" style="text-decoration: underline;">{{mb_strtoupper('centre thalith')}}</b>
-                                <div style="margin: 2px auto">
+                                
+                                <b style="font-size: 17px;" style="text-decoration: underline;">{{mb_strtoupper('centre thalith')}}</b>
+                                <div style="margin: 10px auto">
                                     <img src="assets/images/logo/logo_1.jpg" class="img-fluid mt-1" alt="qr-code-image" height="60" width="80" style="border-radius: 5px">
                                 </div>
                             </div>

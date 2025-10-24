@@ -24,15 +24,15 @@
                 </div>
                 <div class="card-body px-3 pb-0 mt-3">
                     <div class="row">
-                        <div class="col-xxl-6">
+                        <div class="col-lg-6">
                             <div class="card card-h-100">
                                 <div class="card-body p-3">
                                     <div class="text-center py-3">
-                                        <table>
+                                        <table class="w-100">
                                             <tbody>
                                                 <tr>
                                                     <td style="width: 40%">
-                                                        <strong class="my-1" style="font-size: 17px">{{ $data->student->matricule }}</strong>
+                                                        <strong class="my-1" style="font-size: 17px">{{ $data->student->matricule }}</strong> <br>
                                                         <img src="{{ asset('assets/images/users/utilisateur.png') }}" alt="image student" class="img-fluid" width="150" style="margin: 0px auto">
                                                     </td>
                                                     <td style="width: 60%">
@@ -80,10 +80,10 @@
                             </div>
                         </div>
 
-                        <div class="col-xxl-6">
+                        <div class="col-lg-6">
                             <div class="card card-h-100">
                                 <div class="card-header d-flex flex-wrap align-items-center gap-2 border-bottom border-dashed">
-                                    <h4 class="header-title me-auto">Top Selling</h4>
+                                    <h4 class="header-title me-auto">Liste Paie</h4>
 
                                     <div class="d-flex gap-2 justify-content-end text-end">
                                         @if (count($dts))
@@ -112,16 +112,25 @@
                                                         <span class="text-muted fs-12">{{ $param['section_id'] ? $param->section->fin:date('d-m-Y', strtotime($param->fin)) }}</span>
                                                     </td>
                                                     <td>
-                                                        <div class="d-flex align-items-center justify-content-end">
-                                                            <div class="me-2">
-                                                                <span class="badge bg-{{ getStatus($param->status)[0] }}-subtle text-{{ getStatus($param->status)[0] }} fs-12 p-1">{{ getStatus($param->status)[1] }}</span>
+                                                        <h5 class="fs-14 my-1">Status</h5>
+                                                        <span class="badge bg-{{ getStatus($param->status)[0] }}-subtle text-{{ getStatus($param->status)[0] }} fs-12 p-1">{{ getStatus($param->status)[1] }}</span>
+                                                    </td>
+                                                    <td style="width: 30px;">
+                                                        <h5 class="fs-14 my-1"></h5>
+                                                        <div class="dropdown mt-3">
+                                                            <a href="#" class="dropdown-toggle text-muted drop-arrow-none card-drop p-0" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                <i class="ti ti-dots-vertical"></i>
+                                                            </a>
+                                                            <div class="dropdown-menu dropdown-menu-end" style="width: 70px">
+                                                                <a href="javascript:void(0);" class="dropdown-item">Edit</a>
+                                                                <a href="{{ route('payement.pdf',$data['id'].'_'.$param['id']) }}" target="_blank" class="dropdown-item">Imprim</a>
                                                             </div>
                                                         </div>
                                                     </td>
                                                 </tr>
                                                 @empty
                                                 <tr>
-                                                    <th colspan="5" class="text-center my2">Aucune donnée trouvée</th>
+                                                    <th colspan="6" class="text-center my2">Aucune donnée trouvée</th>
                                                 </tr>
                                                 @endforelse 
                                             </tbody>

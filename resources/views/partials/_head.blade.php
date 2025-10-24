@@ -230,7 +230,7 @@
                         data-bs-offset="0,19" type="button" aria-haspopup="false" aria-expanded="false">
                         <img src="{{ asset('assets/images/logo/logo_2.jpg') }}" width="35" height="35" class="rounded-circle me-lg-2 d-flex" alt="user-image" style="background: rgb(181, 181, 181)">
                         <span class="d-lg-flex flex-column gap-1 d-none">
-                            <h5 class="my-0">M. TOM Trem...</h5>
+                            <h5 class="my-0">M. TOM T...</h5>
                         </span>
                         <i class="ri-arrow-down-s-line d-none d-lg-block align-middle ms-1"></i>
                     </a>
