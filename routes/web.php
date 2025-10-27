@@ -45,5 +45,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::post('/store', [App\Http\Controllers\PayementController::class, 'store'])->name('payement.store');
         Route::get('/pdf/{str}', [App\Http\Controllers\PayementController::class, 'filePdf'])->name('payement.pdf');
         Route::get('/list', [App\Http\Controllers\PayementController::class, 'listView'])->name('payement.list');
+        Route::get('/edit', [App\Http\Controllers\PayementController::class, 'edit'])->name('payement.edit');
+        Route::post('/edit', [App\Http\Controllers\PayementController::class, 'update'])->name('payement.update');
     });
 });

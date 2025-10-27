@@ -155,17 +155,52 @@ class PayementController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        try{
+            $val = $request->validate([
+                'paie' => 'required|integer',
+                'debut' => 'required|date',
+                'fin' => 'required|date'
+            ]);
+
+            Payement::where('id', $val['paie'])->update([
+                'debut' => date('d-m-Y', strtotime($val['debut'])),
+                'fin' => date('d-m-Y', strtotime($val['fin'])),
+            ]);
+            return back()->with([
+                'str' => 'info',
+                'msg' => 'Modification prise en compte.'
+            ]);
+        }
+        catch (\Exception $e) {
+            return back()->with([
+                'str' => 'danger',
+                'msg' => 'Une erreur est survenue !'
+            ]);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function edit(Request $request)
     {
-        //
+        try{
+            $data = Payement::find($request['id']);
+            return response()->json([
+                'id' => $data['id'],
+                'debut' => date('d-m-Y', strtotime($data['debut'])),
+                'fin' => date('d-m-Y', strtotime($data['fin'])),
+                'libelle' => ucwords($data['parametre']['libelle'])
+            ]);
+        }
+        catch (\Exception $e) {
+            return back()->with([
+                'str' => 'danger',
+                'msg' => 'Une erreur est survenue !'
+            ]);
+        }
     }
 
 

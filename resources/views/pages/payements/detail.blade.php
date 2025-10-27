@@ -87,42 +87,42 @@
 
                                     <div class="d-flex gap-2 justify-content-end text-end">
                                         @if (count($dts))
-                                            <a href="{{ route('payement.pdf',$data['id']) }}" target="_blank" class="btn btn-sm btn-light">Import <i class="ti ti-download ms-1"></i></a>
+                                            <a href="{{ route('payement.pdf',$data['id']) }}" target="_blank" class="btn btn-sm btn-light"><i class="ti ti-download"></i></a>
                                         @endif
                                     </div>
                                 </div>
                                 <div class="card-body p-0">
                                     <div class="table-responsive">
-                                        <table class="table table-custom align-middle table-nowrap table-hover mb-0">
+                                        <table class="table table-bordered table-custom align-middle table-nowrap mb-0">
                                             <tbody>
                                                 @php $i = 1 @endphp
                                                 @forelse ($dts as $param)
                                                 <tr>
                                                     <th style="width: 85px;">{{ $i <= 9 ? '0'.$i++:$i++ }}</th>
-                                                    <td class="ps-0">
-                                                        <h5 class="fs-14 my-1"><a href="#!" class="link-reset">{{ ucwords($param->parametre->libelle) }}</a></h5>
+                                                    <td class="ps-2">
+                                                        <h5 class="fs-14"><a href="#!" class="link-reset">{{ ucwords($param->parametre->libelle) }}</a></h5>
                                                         <span class="text-muted fs-12">{{ $param['section_id'] ? 'Section '.$param->section->order.' - 3 mois':'1 mois' }}</span>
                                                     </td>
                                                     <td>
-                                                        <h5 class="fs-14 my-1">Debut</h5>
+                                                        <h5 class="fs-14">Debut</h5>
                                                         <span class="text-muted fs-12">{{ $param['section_id'] ? $param->section->debut:date('d-m-Y', strtotime($param->debut)) }}</span>
                                                     </td>
                                                     <td>
-                                                        <h5 class="fs-14 my-1">Fin</h5>
+                                                        <h5 class="fs-14">Fin</h5>
                                                         <span class="text-muted fs-12">{{ $param['section_id'] ? $param->section->fin:date('d-m-Y', strtotime($param->fin)) }}</span>
                                                     </td>
                                                     <td>
-                                                        <h5 class="fs-14 my-1">Status</h5>
+                                                        <h5 class="fs-14">Status</h5>
                                                         <span class="badge bg-{{ getStatus($param->status)[0] }}-subtle text-{{ getStatus($param->status)[0] }} fs-12 p-1">{{ getStatus($param->status)[1] }}</span>
                                                     </td>
                                                     <td style="width: 30px;">
-                                                        <h5 class="fs-14 my-1"></h5>
+                                                        <h5 class="fs-14"></h5>
                                                         <div class="dropdown mt-3">
                                                             <a href="#" class="dropdown-toggle text-muted drop-arrow-none card-drop p-0" data-bs-toggle="dropdown" aria-expanded="false">
                                                                 <i class="ti ti-dots-vertical"></i>
                                                             </a>
                                                             <div class="dropdown-menu dropdown-menu-end" style="width: 70px">
-                                                                <a href="javascript:void(0);" class="dropdown-item">Edit</a>
+                                                                <button type="button" data-id="{{ $param['id'] }}" {{ $param['section_id'] ? 'disabled':null }}  class="dropdown-item myEdit">Edit</button>
                                                                 <a href="{{ route('payement.pdf',$data['id'].'_'.$param['id']) }}" target="_blank" class="dropdown-item">Imprim</a>
                                                             </div>
                                                         </div>
@@ -185,7 +185,42 @@
                 </div>
                 <div class="modal-footer mt-0">
                     <button type="button" class="btn btn-light py-1" data-bs-dismiss="modal" style="width: 100px">Annuler</button>
-                    <button type="submit" class="btn btn-light py-1" id="submit" style="width: 100px" disabled>Valider</button>
+                    <button type="submit" class="btn btn-light py-1" id="submit" style="width: 100px">Valider</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Date End -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form action="{{ route('payement.update') }}" method="post">
+                @csrf
+                <div class="modal-header py-2">
+                    <h3 class="modal-title" id="myCenterModalLabel">Edit Paie</h3>
+                </div>
+                <div class="modal-body mb-0 pb-0">
+                    <input type="hidden" name="paie" id="paieId">
+                    <p class="text-center my-0">
+                        <strong id="libEdit" style="font-size: 17px"></strong>
+                    </p>
+                    <div class="my-3">
+                        <div class="form-group my-2">
+                            <label for="debutEdit" class="form-label mb-0">Date debut :</label>
+                            <input type="text" name="debut" id="debutEdit" class="form-control flatpickr-input" data-provider="flatpickr" data-date-format="d-m-Y" readonly="readonly">
+                        </div>
+
+                        <div class="form-group my-2">
+                            <label for="finEdit" class="form-label mb-0">Date Fin :</label>
+                            <input type="text" name="fin" id="finEdit" class="form-control flatpickr-input" data-provider="flatpickr" data-date-format="d-m-Y" readonly="readonly">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer mt-0">
+                    <button type="button" class="btn btn-light py-1" data-bs-dismiss="modal" style="width: 100px">Annuler</button>
+                    <button type="submit" class="btn btn-light py-1" id="mySubmit" style="width: 100px">Valider</button>
                 </div>
             </form>
         </div>
@@ -245,6 +280,29 @@
             }
             else{
                 $('#submit').prop('disabled', true);
+            }
+        });
+
+
+        $('.myEdit').on('click', function() {
+            if($(this).data('id')){
+                $.ajax({
+                    url: '{{ route('payement.edit') }}',
+                    method: 'GET',
+                    data: {
+                        id: $(this).data('id')
+                    },
+                    success: function(data){
+                       console.log(data);
+                        $('#debutEdit').val(data['debut']);
+                        $('#finEdit').val(data['fin']);
+                        $('#paieId').val(data['id']);
+                        $('#libEdit').text(data['libelle']);
+                        // Affichage du modal -------------------------
+                        var modal = new bootstrap.Modal($('#editModal'));
+                        modal.show();
+                    }
+                }); 
             }
         });
 
