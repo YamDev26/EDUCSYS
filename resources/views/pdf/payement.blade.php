@@ -98,7 +98,7 @@
                 </div>
             </div>
             
-            <div style="padding-top: 10%;  margin-top: 5px;">
+            <div style="padding-top: 5%;  margin-top: 5px;">
                 <table style="width: 90%; margin: 1px auto">
                     <tbody>
                         <tr>
@@ -180,7 +180,7 @@
                         @php $total += $item->parametre->montant  @endphp
                         @endforeach
                         <tr>
-                            <td colspan="4" style="text-align: center; padding: 5px;">Net à payer</td>
+                            <td colspan="4" style="text-align: center; padding: 5px;">Montant payé</td>
                             <td style="text-align: center; padding: 5px; font-weight: bold;">{{ $total ? formatMontant($total):'00' }}F</td>
                         </tr>
                     </tbody>

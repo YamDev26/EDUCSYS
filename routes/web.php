@@ -2,7 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 
-// Lien Activation Office => https://www.youtube.com/watch?v=m4ALRydYnb4 
+// Lien Activation Office => https://www.youtube.com/watch?v=m4ALRydYnb4
+// Laravel Pint → pour le formatage du code
+// Laravel Telescope → pour déboguer
+// Laravel Horizon → pour gérer les jobs en file d’attente
+// Laravel Octane → pour booster les performances
 
 Route::get('/', function () {
     // return view('welcome');
