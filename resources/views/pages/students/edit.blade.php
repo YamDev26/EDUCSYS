@@ -19,7 +19,7 @@
               <div class="d-flex justify-content-between">
                 <h3 class="card-title pb-0">Edit Student</h3>
                 <div class="btn-group" role="group" aria-label="Basic example">
-                  <a href="{{ route('student.create') }}" type="button" class="btn btn-outline-dark">Add</a>
+                  <a href="{{ route('student.show', $data['id']) }}" type="button" class="btn btn-outline-dark">View</a>
                   <a href="{{ route('student.index') }}" class="btn btn-outline-dark py-0">Back</a>
                 </div>
               </div>  

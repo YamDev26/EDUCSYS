@@ -168,16 +168,21 @@
                         <tr>
                             <td style="text-align: center">{{ $i <= 9 ? '0'.$i++:$i++ }}</td>
                             <td>{{ ucfirst($item->parametre->libelle) }} {{ $item->section_id ? ' - Section '.$item->section->order:null }}</td>
-                            <td style="text-align: center">{{ $item['section_id'] ? '3 mois':'1 mois' }}</td>
+                            <td style="text-align: center">{{ $item['number'].' mois' }}</td>
                             <td style="text-align: center">
                                 Du {{ 
                                     $item['section_id'] ? (date('d/m/Y', strtotime($item->section->debut)).' au '.date('d/m/Y', strtotime($item->section->fin))):
                                     (date('d/m/Y', strtotime($item->debut)).' au '.date('d/m/Y', strtotime($item->fin)))
                                  }}
                             </td>
-                            <td style="text-align: center">{{ $item->parametre->montant ? formatMontant($item->parametre->montant):'00' }}F</td>
+                            <td style="text-align: center">
+                                @php
+                                    $mnt = $item['section_id'] ? $item->parametre->montant : ($item->parametre->montant ? ($item->parametre->montant * (int)$item['number']):0);
+                                    $total += $mnt;
+                                @endphp
+                                {{ $mnt ? formatMontant($mnt):'00' }}F
+                            </td>
                         </tr>
-                        @php $total += $item->parametre->montant  @endphp
                         @endforeach
                         <tr>
                             <td colspan="4" style="text-align: center; padding: 5px;">Montant payé</td>

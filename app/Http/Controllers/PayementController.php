@@ -56,7 +56,7 @@ class PayementController extends Controller
         catch (\Exception $e) {
             return back()->with([
                 'str' => 'danger',
-                'msg' => 'Une erreur est survenue !'
+                'msg' => 'Une erreur est survenue !'.$e->getMessage()
             ]);
         }
     }
@@ -89,6 +89,7 @@ class PayementController extends Controller
             $val = $request->validate([
                 'student' => 'required|integer',
                 'service' => 'required|numeric',
+                'number' => 'nullable|integer',
             ]);
 
             $service = Parametre::find($val['service']);
@@ -192,7 +193,8 @@ class PayementController extends Controller
                 'id' => $data['id'],
                 'debut' => date('d-m-Y', strtotime($data['debut'])),
                 'fin' => date('d-m-Y', strtotime($data['fin'])),
-                'libelle' => ucwords($data['parametre']['libelle'])
+                'libelle' => ucwords($data['parametre']['libelle']),
+                'number' => (int)$data['number']
             ]);
         }
         catch (\Exception $e) {
@@ -224,7 +226,8 @@ class PayementController extends Controller
             $curent = Carbon::today();
             $create = Payement::create([
                 'debut' => $curent->format('Y-m-d'),
-                'fin' => $this->getDateFin($curent),
+                'fin' => $this->getDateFin($curent, $data['number']),
+                'number' => $data['number'],
                 'parametre_id' => $data['service'],
                 'school_year_id' => $this->year(),
                 'centre_student_id' => $data['student']
@@ -257,7 +260,8 @@ class PayementController extends Controller
             $curent = Carbon::today();
             $create = Payement::create([
                 'debut' => $curent->format('Y-m-d'),
-                'fin' => $this->getDateFin($curent),
+                'fin' => $this->getDateFin($curent, $data['number']),
+                'number' => $data['number'],
                 'parametre_id' => $data['service'],
                 'school_year_id' => $this->year(),
                 'centre_student_id' => $data['student']
@@ -292,6 +296,7 @@ class PayementController extends Controller
             if(!$exist){
                 Payement::create([
                     'status' => $this->statusSection($val['section'][$i]),
+                    'number' => '3',
                     'school_year_id' => $this->year(),
                     'section_id' => $val['section'][$i],
                     'parametre_id' => $data['service'],
@@ -309,8 +314,8 @@ class PayementController extends Controller
     }
 
 
-    private function getDateFin($dates){
-        $nbJours = 30; // Nombre de jours à ajouter
+    private function getDateFin($dates, $nombre){
+        $nbJours = (30 * $nombre); // Nombre de jours à ajouter
         $end = $dates->addDays($nbJours);
         return $end->format('Y-m-d');
     }

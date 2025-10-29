@@ -1,5 +1,12 @@
 @extends('app')
 @section('title', 'detail payemnt')
+@section('link')
+<style>
+  .form-control {
+    border: 1px solid rgb(143, 143, 143);
+  }
+</style>
+@endsection
 @section('content')
 <div class="page-container">
     <div class="row">
@@ -101,7 +108,7 @@
                                                     <th style="width: 85px;">{{ $i <= 9 ? '0'.$i++:$i++ }}</th>
                                                     <td class="ps-2">
                                                         <h5 class="fs-14"><a href="#!" class="link-reset">{{ ucwords($param->parametre->libelle) }}</a></h5>
-                                                        <span class="text-muted fs-12">{{ $param['section_id'] ? 'Section '.$param->section->order.' - 3 mois':'1 mois' }}</span>
+                                                        <span class="text-muted fs-12">{{ $param['number'].' mois' }}</span>
                                                     </td>
                                                     <td>
                                                         <h5 class="fs-14">Debut</h5>
@@ -169,6 +176,10 @@
                         <div class="d-flex justify-content-between mt-1" id="sectionGroup">
                             <!-- !!! -->
                         </div>
+                        <div class="mt-3 mb-0" id="divNumber" style="display: none">
+                            <label for="number" class="form-label">Nombre de mois à payer<span class="text-danger">*</span> :</label>
+                            <input type="text" name="number" id="number" class="form-control w-50" value="1" minlength="1" maxlength="2">
+                        </div>
                     </div>
 
                     <hr class="mx-3">
@@ -204,7 +215,8 @@
                 <div class="modal-body mb-0 pb-0">
                     <input type="hidden" name="paie" id="paieId">
                     <p class="text-center my-0">
-                        <strong id="libEdit" style="font-size: 17px"></strong>
+                        <strong id="libEdit" style="font-size: 17px"></strong><br>
+                        <span style="font-size: 15px" id="nbreEdit"></span>
                     </p>
                     <div class="my-3">
                         <div class="form-group my-2">
@@ -230,10 +242,18 @@
 @section('script')
 <script>
     $(document).ready(function() {
+        $('#number').on('keypress', function(e) {
+            var charCode = e.which ? e.which : e.keyCode;
+            if (charCode < 48 || charCode > 57) {
+                e.preventDefault();
+            }
+        });
+
         $('.dropdown-item').on('click', function() {
             $('#tarifs').val($(this).data('val'));
+            $('#number').val(1);
             $('.checkbox-day, .form-checkbox-danger').remove();
-            if($(this).data('val')){
+            if($(this).data('val')){    
                 $.ajax({
                     url: '{{ route('payement.create') }}',
                     method: 'GET',
@@ -246,6 +266,7 @@
                             $('#montant').text(parseFloat(data['tarif']['montant']).toLocaleString('fr-FR')+' FR CFA');
                             $('#input').val(data['tarif']['montant']);
                             data['tarif']['etat'] == 2 ? getDay():(data['tarif']['etat'] == 3 ?  getSection(data['infos']) : null);
+                            data['tarif']['etat'] == 3 ? $('#divNumber').hide():$('#divNumber').show();
                         }
                         // Affichage du modal -------------------------
                         var modal = new bootstrap.Modal($('#myModal'));
@@ -298,11 +319,24 @@
                         $('#finEdit').val(data['fin']);
                         $('#paieId').val(data['id']);
                         $('#libEdit').text(data['libelle']);
+                        $('#nbreEdit').text('('+data['number']+' mois)');
                         // Affichage du modal -------------------------
                         var modal = new bootstrap.Modal($('#editModal'));
                         modal.show();
                     }
                 }); 
+            }
+        });
+
+        // Calcul le montant à payer selon le nombre du mois .....................
+        $('#number').on('keyup', function() {
+            $tarif = $('#input').val() ? parseInt($('#input').val()):null;
+            if($(this).val()){
+                $result = $tarif ? ($tarif * parseInt($(this).val())):null;
+                $('#montant').text(parseFloat($result).toLocaleString('fr-FR')+' FR CFA');
+            }
+            else{
+                $('#montant').text('00 FR CFA');
             }
         });
 

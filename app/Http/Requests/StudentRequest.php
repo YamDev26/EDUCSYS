@@ -44,7 +44,8 @@ class StudentRequest extends FormRequest
             'doublant' => 'required|in:oui,non',
             'service' => 'required|integer',
             'day' => 'nullable|array',
-            'section' => 'nullable|array'
+            'section' => 'nullable|array',
+            'number' => 'nullable|integer',
         ];
     }
 }

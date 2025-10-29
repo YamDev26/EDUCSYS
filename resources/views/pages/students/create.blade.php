@@ -322,6 +322,10 @@
                                         <div class="d-flex justify-content-between mt-1" id="sectionGroup">
                                             <!-- !!! -->
                                         </div>
+                                        <div class="mt-3 mb-0" id="divNumber" style="display: none">
+                                            <label for="number" class="form-label">Nombre de mois à payer<span class="text-danger">*</span> :</label>
+                                            <input type="text" name="number" id="number" class="form-control w-50" value="1" minlength="1" maxlength="2">
+                                        </div>
                                     </div>
 
                                     <hr class="mx-3">
@@ -408,7 +412,7 @@
 <script>
   $(document).ready(function() {
 
-    $('.number').on('keypress', function(e) {
+    $('.number, #number').on('keypress', function(e) {
       var charCode = e.which ? e.which : e.keyCode;
       if (charCode < 48 || charCode > 57) {
         e.preventDefault();
@@ -476,7 +480,8 @@
     // -------------- Zone DE Paiement -------------------
 
     $('#services').on('change', function() {
-       $('.checkbox-day, .form-checkbox-danger').remove();
+      $('.checkbox-day, .form-checkbox-danger').remove();
+      $('#number').val(1);
       if($(this).val()){
         $.ajax({
           url: '{{ route('student.service') }}',
@@ -488,6 +493,7 @@
             $('#montant').text(parseFloat(data['tarif']['montant']).toLocaleString('fr-FR')+' FR CFA');
             $('#input').val(data['tarif']['montant']);
             data['tarif']['etat'] == 2 ? getDay():(data['tarif']['etat'] == 3 ?  getSection(data['infos']) : null);
+            data['tarif']['etat'] == 3 ? $('#divNumber').hide():$('#divNumber').show();
           },
         });
       }
@@ -514,6 +520,17 @@
       $(this).is(':checked') ? $('#submit').show():$('#submit').hide(); 
     });
 
+
+    $('#number').on('keyup', function() {
+      $tarif = $('#input').val() ? parseInt($('#input').val()):null;
+      if($(this).val()){
+          $result = $tarif ? ($tarif * parseInt($(this).val())):null;
+          $('#montant').text(parseFloat($result).toLocaleString('fr-FR')+' FR CFA');
+      }
+      else{
+          $('#montant').text('00 FR CFA');
+      }
+    });
 
 
   // Function

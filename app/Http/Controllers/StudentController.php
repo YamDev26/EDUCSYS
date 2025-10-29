@@ -87,7 +87,7 @@ class StudentController extends Controller
                 ]);
 
                 return match(true) {
-                    ($val['service'] == 1) => $this->formulePleine($val['service'], $dts['id']),
+                    ($val['service'] == 1) => $this->formulePleine($val, $dts['id']),
                     ($val['service'] == 2) => $this->formulePartial($val['service'], $val['day'], $dts['id']),
                     ($val['service'] == 3) => $this->coursAnglais($val['service'], $val['section'], $dts['id']),
                     default => back()->with([
@@ -368,13 +368,14 @@ class StudentController extends Controller
 
 
 
-    private function formulePleine($service, $student){
+    private function formulePleine($data, $student){
         $curent = Carbon::today();
         $create = Payement::create([
             'debut' => $curent->format('Y-m-d'),
             'fin' => $this->getDateFin($curent),
+            'number' => $data['number'],
             'school_year_id' => $this->year(),
-            'parametre_id' => $service,
+            'parametre_id' => $data['service'],
             'centre_student_id' => $student
         ]);
         $route = route('payement.pdf', $student.'_'.$create['id']);
@@ -386,17 +387,18 @@ class StudentController extends Controller
     }
 
 
-    private function formulePartial($service, $day, $student){
-        if(count($day) == 2){
+    private function formulePartial($data, $student){
+        if(count($data['day']) == 2){
             $curent = Carbon::today();
             $create = Payement::create([
                 'debut' => $curent->format('Y-m-d'),
                 'fin' => $this->getDateFin($curent),
-                'parametre_id' => $service,
+                'number' => $data['number'],
+                'parametre_id' => $data['service'],
                 'school_year_id' => $this->year(),
                 'centre_student_id' => $student
             ]);
-            $create ? $this->saveDayStudent($day, $create['id']):null;
+            $create ? $this->saveDayStudent($data['day'], $create['id']):null;
             $route = route('payement.pdf', $student.'_'.$create['id']);
             return to_route('payement.show', $student)->with([
                 'str' => 'success',
@@ -421,6 +423,7 @@ class StudentController extends Controller
                 if(!$exist){
                     Payement::create([
                         'status' => $this->statusSection($data[$i]),
+                        'number' => '3',
                         'school_year_id' => $this->year(),
                         'section_id' => $data[$i],
                         'parametre_id' => $service,
