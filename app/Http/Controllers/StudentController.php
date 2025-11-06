@@ -88,7 +88,7 @@ class StudentController extends Controller
 
                 return match(true) {
                     ($val['service'] == 1) => $this->formulePleine($val, $dts['id']),
-                    ($val['service'] == 2) => $this->formulePartial($val['service'], $val['day'], $dts['id']),
+                    ($val['service'] == 2) => $this->formulePartial($val, $dts['id']),
                     ($val['service'] == 3) => $this->coursAnglais($val['service'], $val['section'], $dts['id']),
                     default => back()->with([
                         'str' => 'danger',
@@ -372,7 +372,7 @@ class StudentController extends Controller
         $curent = Carbon::today();
         $create = Payement::create([
             'debut' => $curent->format('Y-m-d'),
-            'fin' => $this->getDateFin($curent),
+            'fin' => $this->getDateFin($curent, $data['number']),
             'number' => $data['number'],
             'school_year_id' => $this->year(),
             'parametre_id' => $data['service'],
@@ -392,7 +392,7 @@ class StudentController extends Controller
             $curent = Carbon::today();
             $create = Payement::create([
                 'debut' => $curent->format('Y-m-d'),
-                'fin' => $this->getDateFin($curent),
+                'fin' => $this->getDateFin($curent, $data['number']),
                 'number' => $data['number'],
                 'parametre_id' => $data['service'],
                 'school_year_id' => $this->year(),
@@ -471,8 +471,8 @@ class StudentController extends Controller
     }
 
 
-    private function getDateFin($dates){
-        $nbJours = 30; // Nombre de jours à ajouter
+    private function getDateFin($dates, $nombre){
+        $nbJours = (30 * $nombre); // Nombre de jours à ajouter
         $end = $dates->addDays($nbJours);
         return $end->format('Y-m-d');
     }
