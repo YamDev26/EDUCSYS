@@ -63,7 +63,7 @@
                                                                 <tr>
                                                                     <th style="text-align: left; padding: 5px;">
                                                                         <h5 class="text-muted">Niveau d'étude</h5>
-                                                                        <b style="margin: 0px; font-size: 14px">{{ ucwords($data->level->level) }} - {{ ucwords($data->originSchool->libelle) }}</b>
+                                                                        <b style="margin: 0px; font-size: 14px">{{ ucwords($data->level->code) }} - {{ ucwords($data->originSchool->libelle) }}</b>
                                                                     </th>
                                                                 </tr>
                                                                 <tr>

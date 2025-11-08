@@ -124,7 +124,7 @@
                                         <tr>
                                             <th style="text-align: left; padding: 5px;">
                                                 <h5 style="margin: 0px; color:#4d4b4b">Niveau d'étude</h5>
-                                                <b style="margin: 0px; font-size: 14px">{{ ucwords($student->level->level) }} - {{ ucwords($student->originSchool->libelle) }}</b>
+                                                <b style="margin: 0px; font-size: 14px">{{ ucwords($student->level->code) }} - {{ ucwords($student->originSchool->libelle) }}</b>
                                             </th>
                                         </tr>
                                         <tr>

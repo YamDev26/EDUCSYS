@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Verify;
+use App\Models\SchoolYear;
+use App\Events\GetActifSectionEvent;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
@@ -12,6 +16,8 @@ class DashboardController extends Controller
     public function index()
     {
         try{
+            $this->updateSection();
+            
             return view('pages.dashboard');
         }
         catch (\Exception $e) {
@@ -65,8 +71,19 @@ class DashboardController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    private function updateSection()
     {
-        //
+        $verif = Verify::where('date', Carbon::now()->toDateString())->first();
+        $verif ? null:
+        event(new GetActifSectionEvent($this->year(), Carbon::now()->toDateString()));
+    }
+    
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    private function year(){
+        $year = SchoolYear::where('status', '1')->first();
+        return $year ? $year['id']:1;
     }
 }
