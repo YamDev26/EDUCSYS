@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use App\Imports\StudentExcelImport;
 use App\Http\Requests\StudentRequest;
 use App\Http\Requests\EditStudentRequest;
+use Yajra\DataTables\Facades\DataTables;
 use Maatwebsite\Excel\Facades\Excel;
 use Carbon\Carbon;
 
@@ -38,6 +39,40 @@ class StudentController extends Controller
                 'str' => 'danger',
                 'msg' => 'Une erreur est survenue !'
             ]);
+        }
+    }
+
+
+    public function getData(Request $request)
+    {
+        if ($request->ajax()) {
+            $centre = auth()->user()->centre_id ?? 1;
+            $data = $this->getStudent($centre);
+            $counter = 0;
+            return DataTables::of($data)
+            ->addColumn('firstName', function ($row) {
+                return strtoupper($row->first_name);
+            })
+            ->addColumn('lastName', function ($row) {
+                return ucwords($row->last_name);
+            })
+            ->addColumn('genre', function ($row) {
+                return ucwords($row->sexe == 'F' ? 'Feminin':'Masculin');
+            })
+            ->addColumn('dateBirth', function ($row) {
+                return date('d/m/Y', strtotime($row->date_birth));
+            })
+            ->addColumn('birth', function ($row) {
+                return ucwords($row->birth);
+            })
+            ->addColumn('action', function ($row) {
+                return '<a href="/student/show/'.$row->id.'" class="btn btn-soft-primary btn-icon btn-sm rounded-circle"> <i class="ti ti-eye"></i></a>';
+            })
+            ->addColumn('counter', function() use (&$counter) {
+                return $counter <= 9 ? '0'.++$counter : ++$counter;
+            })
+            ->rawColumns(['firstName', 'lastName', 'genre', 'dateBirth', 'birth', 'action', 'counter'])
+            ->make(true);
         }
     }
 

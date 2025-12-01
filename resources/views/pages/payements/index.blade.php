@@ -33,13 +33,13 @@
                     <table id="basic-datatable" class="table table-striped table-bordered border-dark dt-responsive nowrap w-100">
                         <thead>
                             <tr>
-                                <th></th>
-                                <th class="text-center">Matricule</th>
-                                <th class="text-center">Nom</th>
+                                <th style="width: 5%"></th>
+                                <th class="text-center" style="width: 10%">Matricule</th>
+                                <th class="text-center" style="width: 10%">Nom</th>
                                 <th class="text-center">Prenoms</th>
-                                <th class="text-center">Genre</th>
-                                <th class="text-center">Niveau</th>
-                                <th class="text-center">Actions</th>
+                                <th class="text-center" style="width: 15%">Genre</th>
+                                <th class="text-center" style="width: 15%">Niveau</th>
+                                <th class="text-center" style="width: 15%">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -54,7 +54,7 @@
                                 <th class="text-center">{{ $student['code'] }}</th>
                                 <td class="text-center">
                                     <div class="hstack gap-1 justify-content-center">
-                                        <a href="{{ route('payement.show', $student['id']) }}" class="btn btn-soft-warning btn-icon btn-sm rounded-circle" title="Voir detail"> <i class="ti ti-eye"></i></a>
+                                        <a href="{{ route('payement.show', $student['id']) }}" class="btn btn-soft-info btn-icon btn-sm rounded-circle" title="Voir detail"> <i class="ti ti-eye"></i></a>
                                     </div>
                                 </td>
                             </tr>

@@ -20,6 +20,7 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::group(['prefix' => 'student'], function() {
         Route::get('/index', [App\Http\Controllers\StudentController::class, 'index'])->name('student.index');
+        Route::get('/data', [App\Http\Controllers\StudentController::class, 'getData'])->name('student.data');
         Route::get('/create', [App\Http\Controllers\StudentController::class, 'create'])->name('student.create');
         Route::post('/create', [App\Http\Controllers\StudentController::class, 'store'])->name('student.store');
         Route::post('/import', [App\Http\Controllers\StudentController::class, 'import'])->name('student.import');

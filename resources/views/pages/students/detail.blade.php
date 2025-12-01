@@ -73,13 +73,15 @@
                                                                 <tr>
                                                                     <th class="pb-2" class="pb-2" style="text-align: left; padding: 5px;">
                                                                         <h5 class="text-muted">Parent</h5>
-                                                                        <b style="margin: 0px; font-size: 17px">M. SANOKO Youssouf</b>
+                                                                        <b style="margin: 0px; font-size: 17px">
+                                                                            {{ ucwords($data->student->studentParent->civility) }}. {{ strtoupper($data->student->studentParent->first_name).' '.ucwords($data->student->studentParent->last_name) }}
+                                                                        </b>
                                                                     </th>
                                                                 </tr>
                                                                 <tr>
                                                                     <th style="text-align: left; padding: 5px;">
                                                                         <h5 class="text-muted">Téléphone</h5>
-                                                                        <b style="margin: 0px; font-size: 15px">0707864278 </b>
+                                                                        <b style="margin: 0px; font-size: 15px">{{ $data->student->studentParent->phon1 }} {{ $data->student->studentParent->phon2 ? ' / '.$data->student->studentParent->phon2:null }}</b>
                                                                     </th>
                                                                 </tr>
                                                             </tbody>
