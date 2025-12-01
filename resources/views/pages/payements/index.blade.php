@@ -4,10 +4,10 @@
 <link href="{{ asset('assets/vendor/datatables.net-bs5/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet" type="text/css">
 <link href="{{ asset('assets/vendor/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css') }}" rel="stylesheet" type="text/css">
 <style>
-    .dt-search label, .dt-length, .dt-column-order{
+    .dataTables_length{
         display: none;
     }
-    .dt-search input{
+    .form-control{
         padding: .4rem .77rem;
         border: 1px solid rgb(98, 98, 98);
         border-radius: 5px
@@ -30,12 +30,12 @@
                    </div>
                 </div>
                 <div class="card-body">
-                    <table id="basic-datatable" class="table table-striped table-bordered border-dark dt-responsive nowrap w-100">
+                    <table class="table table-striped table-bordered border-dark dt-responsive nowrap w-100" id="myTable">
                         <thead>
                             <tr>
                                 <th style="width: 5%"></th>
                                 <th class="text-center" style="width: 10%">Matricule</th>
-                                <th class="text-center" style="width: 10%">Nom</th>
+                                <th class="text-center" style="width: 15%">Nom</th>
                                 <th class="text-center">Prenoms</th>
                                 <th class="text-center" style="width: 15%">Genre</th>
                                 <th class="text-center" style="width: 15%">Niveau</th>
@@ -43,22 +43,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @php $i = 1;  @endphp
-                            @foreach ($students as $student)
-                            <tr>
-                                <td class="text-center">{{ $i <= 9 ? '0'.$i++:$i++ }}</td>
-                                <td class="text-center">{{ strtoupper($student['matricule']) }}</td>
-                                <td>{{ strtoupper($student['first_name']) }}</td>
-                                <td>{{ ucwords($student['last_name']) }}</td>
-                                <td class="text-center">{{ $student['sexe'] == 'F' ? 'Feminin':'Masculin' }}</td>
-                                <th class="text-center">{{ $student['code'] }}</th>
-                                <td class="text-center">
-                                    <div class="hstack gap-1 justify-content-center">
-                                        <a href="{{ route('payement.show', $student['id']) }}" class="btn btn-soft-info btn-icon btn-sm rounded-circle" title="Voir detail"> <i class="ti ti-eye"></i></a>
-                                    </div>
-                                </td>
-                            </tr>
-                            @endforeach
+                            <!-- CONTENT -->
                         </tbody>
                     </table>
 
@@ -69,13 +54,30 @@
 </div>
 @endsection
 @section('script')
-<script src="{{ asset('assets/vendor/datatables.net/js/dataTables.min.js') }}"></script>
-<script src="{{ asset('assets/vendor/datatables.net-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
-<!-- Datatable Demo js -->
-<script src="{{ asset('assets/js/components/table-datatable.js') }}"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 <script>
     $(document).ready(function() {
-        $('.dt-search input').attr('placeholder', 'Search...');
+        $('.form-control').attr('placeholder', 'Search...');
+        $('#myTable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: '{{ route('payement.data') }}',
+            columns: [
+                {data: 'counter', className: "text-center pt-2", orderable: false, searchable: false},
+                {data: 'matricule', className: "text-center pt-2"},
+                {data: 'firstName'},
+                {data: 'lastName'},
+                {data: 'genre', className: "text-center pt-2"},
+                {data: 'level', className: "text-center pt-2"},
+                {data: 'action', className: "text-center", orderable: false, searchable: false},
+            ],
+            pageLength: 10,
+            language: {
+                url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json"
+            }
+        });
     })
 </script>
 @endsection

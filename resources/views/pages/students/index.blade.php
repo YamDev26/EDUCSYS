@@ -7,7 +7,7 @@
     .dataTables_length{
         display: none;
     }
-    .dt-search input{
+    .form-control{
         padding: .4rem .77rem;
         border: 1px solid rgb(98, 98, 98);
         border-radius: 5px
@@ -59,6 +59,7 @@
 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 <script>
     $(document).ready(function() {
+
         $('#myTable').DataTable({
             processing: true,
             serverSide: true,

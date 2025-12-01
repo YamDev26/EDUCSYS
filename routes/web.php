@@ -45,6 +45,7 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::group(['prefix' => 'payement'], function() {
         Route::get('/index', [App\Http\Controllers\PayementController::class, 'index'])->name('payement.index');
+        Route::get('/data', [App\Http\Controllers\PayementController::class, 'getData'])->name('payement.data');
         Route::get('/create', [App\Http\Controllers\PayementController::class, 'create'])->name('payement.create');
         Route::get('/show/{id}', [App\Http\Controllers\PayementController::class, 'show'])->name('payement.show');
         Route::post('/store', [App\Http\Controllers\PayementController::class, 'store'])->name('payement.store');

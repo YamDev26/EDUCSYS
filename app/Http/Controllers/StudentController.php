@@ -28,11 +28,7 @@ class StudentController extends Controller
     public function index()
     {
          try{
-            $centre = auth()->user()->centre_id ?? 1;
-            $students = $this->getStudent($centre);
-            return view('pages.students.index',[
-                'students' => $students
-            ]);
+            return view('pages.students.index');
         }
         catch (\Exception $e) {
             return back()->with([

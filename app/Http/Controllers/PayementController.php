@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Day;
 use App\Models\Section;
 use App\Models\Payement;
 use App\Models\Parametre;
@@ -12,6 +11,7 @@ use App\Models\CentreStudent;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Yajra\DataTables\Facades\DataTables;
 
 class PayementController extends Controller
 {
@@ -21,16 +21,45 @@ class PayementController extends Controller
     public function index()
     {
         try{
-            $students = $this->getStudent(auth()->user()->centre_id ?? 1, $this->year());
-            return view('pages.payements.index',[
-                'students' => $students
-            ]);
+            return view('pages.payements.index');
         }
         catch (\Exception $e) {
             return back()->with([
                 'str' => 'danger',
                 'msg' => 'Une erreur est survenue !'
             ]);
+        }
+    }
+
+
+    public function getData(Request $request){
+        if ($request->ajax()) {
+            $query = $this->getStudent(auth()->user()->centre_id ?? 1, $this->year());
+            $counter = 0;
+            return DataTables::of($query)
+            ->addColumn('firstName', function ($row) {
+                return strtoupper($row->first_name);
+            })
+            ->addColumn('lastName', function ($row) {
+                return ucwords($row->last_name);
+            })
+            ->addColumn('genre', function ($row) {
+                return ucwords($row->sexe == 'F' ? 'Feminin':'Masculin');
+            })
+            ->addColumn('level', function ($row) {
+                return $row->code;
+            })
+            ->addColumn('action', function ($row) {
+                $url = route('payement.show', $row->id);
+                return ('<div class="hstack gap-1 justify-content-center">
+                    <a href="'.$url.'" class="btn btn-soft-warning btn-icon btn-sm rounded-circle" title="View"> <i class="ti ti-eye"></i></a>
+                </div>');
+            })
+            ->addColumn('counter', function() use (&$counter) {
+                return $counter <= 9 ? '0'.++$counter : ++$counter;
+            })
+            ->rawColumns(['firstName', 'lastName', 'genre', 'level', 'action', 'counter'])
+            ->make(true);
         }
     }
 

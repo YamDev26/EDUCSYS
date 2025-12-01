@@ -69,7 +69,7 @@
                                                                 <tr>
                                                                     <th style="text-align: left; padding: 5px;">
                                                                         <h5 class="text-muted">Parent</h5>
-                                                                        <b style="margin: 0px; font-size: 14px">{{ ($data->student->studentParent->civility == 'm' ? 'M. ':'Mme ').strtoupper($data->student->studentParent->first_name) .' '. ucwords($data->student->studentParent->last_name) }}</b>
+                                                                        <b style="margin: 0px; font-size: 14px">{{ ($data->student->studentParent->civility == 'm' ? 'M. ':'Mme. ').strtoupper($data->student->studentParent->first_name) .' '. ucwords($data->student->studentParent->last_name) }}</b>
                                                                     </th>
                                                                 </tr>
                                                                 <th style="text-align: left; padding: 5px;">
