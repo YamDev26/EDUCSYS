@@ -1,8 +1,10 @@
 @extends('app')
-@section('title', 'Payement')
+@section('title', 'Appel')
 @section('link')
 <link href="{{ asset('assets/vendor/datatables.net-bs5/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet" type="text/css">
 <link href="{{ asset('assets/vendor/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css') }}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
 <style>
     .dataTables_length{
         display: none;
@@ -22,11 +24,12 @@
             <div class="card">
                 <div class="card-header border-bottom border-dashed pb-0">
                    <div class="d-flex justify-content-between mb-0 pb-0">
-                      <div class="card-title pb-0" style="font-size: 19px;">Appel du {{ $date }}</div>
+                      <div class="card-title pb-0" style="font-size: 19px;">Appel Du <strong style="text-decoration: underline">{{ ucwords($date) }}</strong></div>
                       <div class="card-title pb-0" style="font-size: 19px;">Groupe {{ ucfirst($group) }}</div>
                       <div class="group-btn py-0" role="group" aria-label="Basic example">
                           {{-- <a  href="{{ route('appel.create') }}" class="btn btn-soft-dark bg-gradient py-0">Add</a> --}}
-                          <a href="{{ route('dashboard') }}" type="button" class="btn btn-soft-dark bg-gradient py-0">Back</a>
+                          <a href="{{ route('appel.index') }}" type="button" class="btn btn-soft-dark bg-gradient py-0">Back</a>
+                          <input type="hidden" id="appel" value="{{ $appel->id }}">
                       </div>
                    </div>
                 </div>
@@ -58,6 +61,7 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 <script>
   $(document).ready(function() {
     $('.form-control').attr('placeholder', 'Search...');
@@ -80,13 +84,28 @@
         }
     });
 
+    // On click Input Checkbox
     $(document).on('click', '.checkbox', function() {
-      if ($(this).is(':checked')) {
-        alert('La checkbox est cochée');
-      } else {
-        alert('La checkbox n’est pas cochée');
-      }
-    })
+      $.ajax({
+            url: "{{ route('appel.store') }}",
+            type: "GET",
+            data: {
+                studnet: $(this).val(),
+                appel: $('#appel').val(),
+                val: $(this).is(':checked') ? 1:0
+            },
+            success: function (response) {
+                console.log("Succès :", response);
+                alert(response.message);
+            },
+            error: function (xhr) {
+                console.log("Erreur :", xhr.responseText);
+            }
+        });
+    });
+
+
+    alertify.success('Opération réussie');
 
   })
 </script>

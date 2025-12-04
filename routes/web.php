@@ -22,7 +22,8 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/index', [App\Http\Controllers\AppelController::class, 'index'])->name('appel.index');
         Route::get('/data', [App\Http\Controllers\AppelController::class, 'dataTable'])->name('appel.data');
         Route::get('/create', [App\Http\Controllers\AppelController::class, 'create'])->name('appel.create');
-         Route::get('/data1', [App\Http\Controllers\AppelController::class, 'dataTable1'])->name('appel.data1');
+        Route::get('/data1', [App\Http\Controllers\AppelController::class, 'dataTable1'])->name('appel.data1');
+        Route::get('/store', [App\Http\Controllers\AppelController::class, 'store'])->name('appel.store');
     });
 
     Route::group(['prefix' => 'student'], function() {

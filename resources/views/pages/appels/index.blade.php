@@ -1,5 +1,5 @@
 @extends('app')
-@section('title', 'Payement')
+@section('title', 'Appel')
 @section('link')
 <link href="{{ asset('assets/vendor/datatables.net-bs5/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet" type="text/css">
 <link href="{{ asset('assets/vendor/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css') }}" rel="stylesheet" type="text/css">
@@ -25,7 +25,7 @@
                       <div class="card-title pb-0" style="font-size: 19px;">Gestion Appels</div>
                       <div class="card-title pb-0" style="font-size: 19px;">Groupe {{ ucfirst($group) }}</div>
                       <div class="group-btn py-0" role="group" aria-label="Basic example">
-                          <a  href="{{ route('appel.create') }}" class="btn btn-soft-dark bg-gradient py-0">Add</a>
+                          <button type="button" class="btn btn-soft-dark bg-gradient py-0" id="addBtn">Add</button>
                           <a href="{{ route('dashboard') }}" type="button" class="btn btn-soft-dark bg-gradient py-0">Back</a>
                       </div>
                    </div>
@@ -50,6 +50,40 @@
 
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form action="{{ route('appel.create') }}" method="get">
+                @csrf
+                <div class="modal-header py-1">
+                    <h4 class="modal-title" id="addModalLongTitle">Add Appel</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="date" class="form-label">Date pour l'appel<span class="text-danger">*</span> :</label>
+                        <input type="date" name="date" id="date" id="simpleinput" class="form-control" value="{{ \Carbon\Carbon::today()->format('Y-m-d') }}">
+                    </div>
+                    <div class="mb-0">
+                        <label for="date" class="form-label">Période<span class="text-danger">*</span> :</label> <br>
+                        <span class="form-checks">
+                            <input type="radio" id="monning" name="period" class="form-check-input" value="12">
+                            <label class="form-check-label" for="monning">Matin</label>
+                        </span>
+                        <span class="form-checks mx-2">
+                            <input type="radio" id="afternoom" name="period" class="form-check-input" value="13">
+                            <label class="form-check-label" for="afternoom">Après midi</label>
+                        </span>
+                    </div>
+                </div>
+                <div class="modal-footer mt-0">
+                    <button type="button" class="btn btn-light py-1" data-bs-dismiss="modal" style="width: 100px">Annuler</button>
+                    <button type="submit" class="btn btn-light py-1" id="mySubmit" style="width: 100px">Valider</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -78,6 +112,21 @@
             language: {
                 url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json"
             }
+        });
+
+
+
+        $('#addBtn').on('click', function() {
+
+            $now = new Date();
+            $heures = $now.getHours();
+
+            $heures <= 12 ? 
+            $('#monning').prop('checked', true):
+            $('#afternoom').prop('checked', true);
+            // Affichage du modal -------------------------
+            var modal = new bootstrap.Modal($('#addModal'));
+            modal.show();
         });
     })
 </script>

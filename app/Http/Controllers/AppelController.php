@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Appel;
 use App\Models\SchoolYear;
 use App\Models\CentreStudent;
 use Carbon\Carbon;
@@ -61,14 +62,31 @@ class AppelController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
         try{
-            $date = Carbon::now();
-            return view('pages.appels.create',[
-                'group' => $this->getGroup(),
-                'date' => date('d-m-Y', strtotime($date))
+            Appel::where('centre_id', '1')->delete();
+            $val = $request->validate([
+                'date' => 'required|date',
+                'period' => 'required|integer',
             ]);
+            Carbon::setLocale('fr');
+            $date = Carbon::parse($val['date']);
+            $period = $this->getGroup($date, (int)$val['period']);
+            $appel = $this->getAppel($val['date'], $period);
+            if(!($appel == 'oui')){
+                return view('pages.appels.create',[
+                    'appel' => $appel,
+                    'group' => $period,
+                    'date' => $date->isoFormat('D MMMM YYYY'),
+                ]);
+            }
+            else{
+                return back()->with([
+                    'str' => 'warning',
+                    'msg' => 'Appel éffectué.'
+                ]);
+            }
         }
         catch (\Exception $e) {
             return back()->with([
@@ -162,16 +180,31 @@ class AppelController extends Controller
     }
 
 
-    private function getGroup(){
+    private function getGroup($day1 = null, $hour1 = null){
 
         $date = Carbon::now();
         Carbon::setLocale('fr');
-        $day = $date->isoFormat('dddd');
-        $hour = $date->hour;
+        $day = $day1 ? $day1->isoFormat('dddd'):$date->isoFormat('dddd');
+        $hour = $hour1 ? $hour1:$date->hour;
         return match(true){
             ((in_array($day, ['lundi', 'mardi']) && ($hour <= 12)) || (in_array($day, ['jeudi', 'vendredi']) && ($hour > 12))) => 'A',
             ((in_array($day, ['jeudi', 'vendredi']) && ($hour <= 12)) ||  (in_array($day, ['lundi', 'mardi']) && ($hour > 12))) => 'B'
         };
+    }
+
+
+    private function getAppel($date, $period){
+        $centre = auth()->user()->centre_id ?? 1;
+        $appel = Appel::where('created', $date)->where('period', $period)->where('centre_id', $centre)->where('school_year_id', $this->year())->count();
+        if(!$appel){
+            $data = Appel::create([
+                'created' => $date,
+                'period' => $period,
+                'centre_id' => $centre,
+                'school_year_id' => $this->year(),
+            ]);
+        }
+        return $appel ? 'oui':$data;
     }
 
 
