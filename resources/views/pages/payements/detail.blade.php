@@ -16,16 +16,18 @@
                 <div class="card-header border-bottom border-dashed pb-0">
                    <div class="d-flex justify-content-between">
                         <div class="card-title pb-0" style="font-size: 19px;">Detail Payements</div>
-                        <div class="btn-group" role="group" aria-label="Basic example">
-                            <div class="dropdown">
-                                <button class="btn btn-outline-dark dropdown-toggle drop-arrow-none" data-bs-toggle="dropdown" aria-expanded="false">Add</button>
+                        <div class="group-btn py-0 d-flex" role="group" aria-label="Basic example">
+                            <div class="dropdown mx-1">
+                                <button class="btn btn-soft-dark bg-gradient py-0" data-bs-toggle="dropdown" aria-expanded="false">Add</button>
                                 <div class="dropdown-menu dropdown-menu-end" style="">
                                     @foreach ($tarif as $item)
                                     <button data-val="{{ $item['id'] }}" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#centermodal">{{ ucwords($item['libelle']) }}</button>
                                     @endforeach
                                 </div>
                             </div>
-                            <a href="{{ route('payement.index') }}" type="button" class="btn btn-outline-dark">Back</a>
+                            <div class="py-0">
+                                <a href="{{ route('payement.index') }}" class="btn btn-soft-dark bg-gradient py-0">Back</a>
+                            </div>
                         </div>
                    </div>
                 </div>
@@ -40,7 +42,8 @@
                                                 <tr>
                                                     <td style="width: 40%">
                                                         <strong class="my-1" style="font-size: 17px">{{ $data->student->matricule }}</strong> <br>
-                                                        <img src="{{ asset('assets/images/users/utilisateur.png') }}" alt="image student" class="img-fluid" width="150" style="margin: 0px auto">
+                                                        <img src="{{ asset('assets/images/users/utilisateur.png') }}" alt="image student" class="img-fluid" width="150" style="margin: 0px auto"> <br>
+                                                        <strong class="my-1" style="font-size: 15px">{{ 'Groupe : '.$data->group ?? '---' }}</strong>
                                                     </td>
                                                     <td style="width: 60%">
                                                         <table>

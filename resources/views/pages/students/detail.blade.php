@@ -12,9 +12,9 @@
                 <div class="card-header border-bottom border-dashed pb-0">
                    <div class="d-flex justify-content-between">
                         <div class="card-title pb-0" style="font-size: 19px;">Detail Apprenant</div>
-                        <div class="btn-group" role="group" aria-label="Basic example">
-                            <a href="{{ route('student.edit', $data['id']) }}" type="button" class="btn btn-outline-dark">Edit</a>
-                            <a href="{{ route('student.index') }}" type="button" class="btn btn-outline-dark">Back</a>
+                        <div class="group-btn py-0" role="group">
+                            <a href="{{ route('student.edit', $data['id']) }}" class="btn btn-soft-dark bg-gradient py-0">Edit</a>
+                            <a href="{{ route('student.index') }}" class="btn btn-soft-dark bg-gradient py-0">Back</a>
                         </div>
                    </div>
                 </div>

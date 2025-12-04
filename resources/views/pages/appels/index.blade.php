@@ -21,12 +21,13 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header border-bottom border-dashed pb-0">
-                   <div class="d-flex justify-content-between">
-                        <div class="card-title pb-0" style="font-size: 19px;">Gestion Payements</div>
-                        <div class="group-btn py-0" role="group">
-                            <a  href="#" class="btn btn-soft-dark bg-gradient py-0">View</a>
-                            <a href="{{ route('dashboard') }}" class="btn btn-soft-dark bg-gradient py-0">Back</a>
-                        </div>
+                   <div class="d-flex justify-content-between mb-0 pb-0">
+                      <div class="card-title pb-0" style="font-size: 19px;">Gestion Appels</div>
+                      <div class="card-title pb-0" style="font-size: 19px;">Groupe {{ ucfirst($group) }}</div>
+                      <div class="group-btn py-0" role="group" aria-label="Basic example">
+                          <a  href="{{ route('appel.create') }}" class="btn btn-soft-dark bg-gradient py-0">Add</a>
+                          <a href="{{ route('dashboard') }}" type="button" class="btn btn-soft-dark bg-gradient py-0">Back</a>
+                      </div>
                    </div>
                 </div>
                 <div class="card-body">
@@ -63,7 +64,7 @@
         $('#myTable').DataTable({
             processing: true,
             serverSide: true,
-            ajax: '{{ route('payement.data') }}',
+            ajax: '{{ route('appel.data') }}',
             columns: [
                 {data: 'counter', className: "text-center pt-2", orderable: false, searchable: false},
                 {data: 'matricule', className: "text-center pt-2"},

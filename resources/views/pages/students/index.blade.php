@@ -23,9 +23,9 @@
                 <div class="card-header border-bottom border-dashed pb-0">
                    <div class="d-flex justify-content-between">
                         <div class="card-title pb-0" style="font-size: 19px;">Gestion Des Apprenants</div>
-                        <div class="btn-group" role="group" aria-label="Basic example">
-                            <a href="{{ route('student.create') }}" type="button" class="btn btn-outline-dark py-0">Add</a>
-                            <a href="{{ route('dashboard') }}" type="button" class="btn btn-outline-dark py-0">Back</a>
+                        <div class="group-btn py-0" role="group">
+                            <a href="{{ route('student.create') }}" type="button" class="btn btn-soft-dark bg-gradient py-0">Add</a>
+                            <a href="{{ route('dashboard') }}" type="button" class="btn btn-soft-dark bg-gradient py-0">Back</a>
                         </div>
                    </div>
                 </div>

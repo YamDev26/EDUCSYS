@@ -21,12 +21,13 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header border-bottom border-dashed pb-0">
-                   <div class="d-flex justify-content-between">
-                        <div class="card-title pb-0" style="font-size: 19px;">Gestion Payements</div>
-                        <div class="group-btn py-0" role="group">
-                            <a  href="#" class="btn btn-soft-dark bg-gradient py-0">View</a>
-                            <a href="{{ route('dashboard') }}" class="btn btn-soft-dark bg-gradient py-0">Back</a>
-                        </div>
+                   <div class="d-flex justify-content-between mb-0 pb-0">
+                      <div class="card-title pb-0" style="font-size: 19px;">Appel du {{ $date }}</div>
+                      <div class="card-title pb-0" style="font-size: 19px;">Groupe {{ ucfirst($group) }}</div>
+                      <div class="group-btn py-0" role="group" aria-label="Basic example">
+                          {{-- <a  href="{{ route('appel.create') }}" class="btn btn-soft-dark bg-gradient py-0">Add</a> --}}
+                          <a href="{{ route('dashboard') }}" type="button" class="btn btn-soft-dark bg-gradient py-0">Back</a>
+                      </div>
                    </div>
                 </div>
                 <div class="card-body">
@@ -58,26 +59,35 @@
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 <script>
-    $(document).ready(function() {
-        $('.form-control').attr('placeholder', 'Search...');
-        $('#myTable').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: '{{ route('payement.data') }}',
-            columns: [
-                {data: 'counter', className: "text-center pt-2", orderable: false, searchable: false},
-                {data: 'matricule', className: "text-center pt-2"},
-                {data: 'firstName'},
-                {data: 'lastName'},
-                {data: 'genre', className: "text-center pt-2"},
-                {data: 'level', className: "text-center pt-2"},
-                {data: 'action', className: "text-center", orderable: false, searchable: false},
-            ],
-            pageLength: 10,
-            language: {
-                url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json"
-            }
-        });
+  $(document).ready(function() {
+    $('.form-control').attr('placeholder', 'Search...');
+    $('#myTable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: '{{ route('appel.data1') }}',
+        columns: [
+            {data: 'counter', className: "text-center pt-2", orderable: false, searchable: false},
+            {data: 'matricule', className: "text-center pt-2"},
+            {data: 'firstName'},
+            {data: 'lastName'},
+            {data: 'genre', className: "text-center pt-2"},
+            {data: 'level', className: "text-center pt-2"},
+            {data: 'action', className: "text-center", orderable: false, searchable: false},
+        ],
+        pageLength: 10,
+        language: {
+            url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json"
+        }
+    });
+
+    $(document).on('click', '.checkbox', function() {
+      if ($(this).is(':checked')) {
+        alert('La checkbox est cochée');
+      } else {
+        alert('La checkbox n’est pas cochée');
+      }
     })
+
+  })
 </script>
 @endsection

@@ -18,9 +18,9 @@
             <div class="card-header border-bottom border-dashed pb-0">
               <div class="d-flex justify-content-between">
                 <h3 class="card-title pb-0">Create New Student</h3>
-                <div class="btn-group" role="group" aria-label="Basic example">
-                  <button class="btn btn-outline-dark py-0" data-bs-toggle="modal" data-bs-target="#centermodal">File</button>
-                  <a href="{{ route('student.index') }}" class="btn btn-outline-dark py-0">Back</a>
+                <div class="group-btn py-0" role="group">
+                  <button class="btn btn-soft-dark bg-gradient py-0" data-bs-toggle="modal" data-bs-target="#centermodal">File</button>
+                  <a href="{{ route('student.index') }}" class="btn btn-soft-dark bg-gradient py-0">Back</a>
                 </div>
               </div>  
             </div>
@@ -383,15 +383,14 @@
     <div class="modal-content">
       <form action="{{ route('student.import') }}" method="post" enctype="multipart/form-data">
         @csrf
-        <div class="modal-header py-2">
+        <div class="modal-header py-1">
             <h4 class="modal-title" id="myCenterModalLabel">Import File</h4>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>  
         <div class="modal-body">
           <div class="mb-2">
             <span class="d-flex justify-content-between mb-2">
                <label for="file" class="form-label">Select File<span class="text-danger">*</span> :</label>
-                <a href="{{route('student.export')}}" class="btn btn-soft-dark btn-icon btn-sm rounded-circle btn-sm px-1 py-0 my-0" title="File example"><i class="ti ti-file-export mx-0"></i></a>
+                <a href="{{route('student.export')}}" class="btn btn-soft-warning btn-icon btn-sm rounded-circle btn-sm px-1 py-0 my-0" title="File example"><i class="ti ti-file-export mx-0"></i></a>
             </span>
             <input type="file" name="files" id="file" class="form-control" style="border: 1px solid rgb(194, 193, 193)">
           </div>

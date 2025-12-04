@@ -26,16 +26,16 @@
             <li class="side-nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                 <a href="{{ route('dashboard') }}" class="side-nav-link">
                     <span class="menu-icon"><i class="ri-dashboard-horizontal-fill"></i></span>
-                    <span class="menu-text"> Dashboard </span>
+                    <span class="menu-text">Dashboard </span>
                 </a>
             </li>
 
-            {{-- <li class="side-nav-item">
-                <a href="apps-chat.html" class="side-nav-link">
-                    <span class="menu-icon"><i class="ti ti-message"></i></span>
-                    <span class="menu-text"> Chat </span>
+            <li class="side-nav-item {{ request()->is('appel/*') ? 'active' : '' }}">
+                <a href="{{ route('appel.index') }}" class="side-nav-link">
+                    <span class="menu-icon"><i class="ti ti-alarm"></i></span>
+                    <span class="menu-text">Appels </span>
                 </a>
-            </li> --}}
+            </li>
 
             <li class="side-nav-item {{ request()->is('payement/*') ? 'active' : '' }}">
                 <a href="{{ route('payement.index') }}" class="side-nav-link">

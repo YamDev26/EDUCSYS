@@ -52,7 +52,7 @@ class PayementController extends Controller
             ->addColumn('action', function ($row) {
                 $url = route('payement.show', $row->id);
                 return ('<div class="hstack gap-1 justify-content-center">
-                    <a href="'.$url.'" class="btn btn-soft-warning btn-icon btn-sm rounded-circle" title="View"> <i class="ti ti-eye"></i></a>
+                    <a href="'.$url.'" class="btn btn-soft-info btn-icon btn-sm rounded-circle" title="View"> <i class="ti ti-eye"></i></a>
                 </div>');
             })
             ->addColumn('counter', function() use (&$counter) {

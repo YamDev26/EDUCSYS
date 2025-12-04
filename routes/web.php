@@ -18,6 +18,13 @@ Route::get('/', function () {
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
 
+    Route::group(['prefix' => 'appel'], function() {
+        Route::get('/index', [App\Http\Controllers\AppelController::class, 'index'])->name('appel.index');
+        Route::get('/data', [App\Http\Controllers\AppelController::class, 'dataTable'])->name('appel.data');
+        Route::get('/create', [App\Http\Controllers\AppelController::class, 'create'])->name('appel.create');
+         Route::get('/data1', [App\Http\Controllers\AppelController::class, 'dataTable1'])->name('appel.data1');
+    });
+
     Route::group(['prefix' => 'student'], function() {
         Route::get('/index', [App\Http\Controllers\StudentController::class, 'index'])->name('student.index');
         Route::get('/data', [App\Http\Controllers\StudentController::class, 'getData'])->name('student.data');

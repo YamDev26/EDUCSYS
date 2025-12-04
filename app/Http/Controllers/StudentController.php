@@ -18,6 +18,7 @@ use App\Http\Requests\StudentRequest;
 use App\Http\Requests\EditStudentRequest;
 use Yajra\DataTables\Facades\DataTables;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Str;
 use Carbon\Carbon;
 
 class StudentController extends Controller
@@ -28,6 +29,8 @@ class StudentController extends Controller
     public function index()
     {
          try{
+            $data = CentreStudent::where('group', null)->get();
+            $data ? $this->getUpdate($data):null;
             return view('pages.students.index');
         }
         catch (\Exception $e) {
@@ -506,5 +509,17 @@ class StudentController extends Controller
         $nbJours = (30 * $nombre); // Nombre de jours à ajouter
         $end = $dates->addDays($nbJours);
         return $end->format('Y-m-d');
+    }
+
+
+    private function getUpdate($data){
+        foreach($data as $item){
+            if(Str::contains($item->classe, 'A')){
+                $item->update(['group' => 'A']);
+            }
+            elseif(Str::contains($item->classe, 'B')){
+                $item->update(['group' => 'B']);
+            }
+        }
     }
 }

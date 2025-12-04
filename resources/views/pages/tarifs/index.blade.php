@@ -18,22 +18,18 @@
 <div class="page-container">
     <div class="row">
         @include('partials._alert')
-        <div class="col-xl-10 offset-xl-1 col-12">
+        <div class="col-12">
             <div class="card">
                 <div class="card-header border-bottom border-dashed pb-0">
                    <div class="d-flex justify-content-between">
                         <div class="card-title pb-0" style="font-size: 19px;">Gestion Tarifs</div>
-                        <div class="btn-group" role="group" aria-label="Basic example">
-                            <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#centermodal">Add</button>
-                            <a href="{{ route('dashboard') }}" type="button" class="btn btn-outline-dark">Back</a>
+                        <div class="group-btn py-0" role="group">
+                            <button class="btn btn-soft-dark bg-gradient py-0" data-bs-toggle="modal" data-bs-target="#centermodal">Add</button>
+                            <a href="{{ route('dashboard') }}" class="btn btn-soft-dark bg-gradient py-0">Back</a>
                         </div>
                    </div>
                 </div>
                 <div class="card-body">
-                    {{-- <div class="form-group d-flex justify-content-between mb-2">
-                        <span></span>
-                        <input type="text" class="form-control w-25" placeholder="Search ..." style="position: relative; border:1px solid rgb(212, 211, 211);">
-                    </div> --}}
                     <table id="basic-datatable" class="table table-bordered border-dark mb-0">
                         <thead>
                             <tr>
