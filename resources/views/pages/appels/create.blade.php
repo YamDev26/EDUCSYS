@@ -6,10 +6,10 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
 <style>
-    .dataTables_length{
+    .dt-length{
         display: none;
     }
-    .form-control{
+    .dt-search input{
         padding: .4rem .77rem;
         border: 1px solid rgb(98, 98, 98);
         border-radius: 5px
@@ -34,7 +34,7 @@
                    </div>
                 </div>
                 <div class="card-body">
-                    <table class="table table-striped table-bordered border-dark dt-responsive nowrap w-100" id="myTable">
+                    <table id="basic-datatable" class="table table-striped table-bordered border-dark dt-responsive nowrap w-100">
                         <thead>
                             <tr>
                                 <th style="width: 5%"></th>
@@ -46,8 +46,24 @@
                                 <th class="text-center" style="width: 15%">Actions</th>
                             </tr>
                         </thead>
+
                         <tbody>
-                            <!-- CONTENT -->
+                            @php $i = 0; @endphp
+                            @foreach ($data as $item)
+                                <tr>
+                                    <td class="text-center pt-2">{{ $i <= 9 ? '0'.++$i : ++$i }}</td>
+                                    <td class="text-center pt-2">{{ $item->matricule }}</td>
+                                    <td>{{ strtoupper($item->first_name) }}</td>
+                                    <td>{{ ucwords($item->last_name) }}</td>
+                                    <td class="text-center pt-2">{{ ucwords($item->sexe == 'F' ? 'Feminin':'Masculin') }}</td>
+                                    <td class="text-center pt-2">{{ $item->code }}</td>
+                                    <td class="text-center">
+                                        <div class="hstack gap-1 justify-content-center">
+                                            <input type="checkbox" class="checkbox" value="{{ $item->id }}">
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
 
@@ -58,55 +74,41 @@
 </div>
 @endsection
 @section('script')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+<script src="{{ asset('assets/vendor/datatables.net/js/dataTables.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/datatables.net-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
+<script src="{{ asset('assets/js/components/table-datatable.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 <script>
   $(document).ready(function() {
     $('.form-control').attr('placeholder', 'Search...');
-    $('#myTable').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: '{{ route('appel.data1') }}',
-        columns: [
-            {data: 'counter', className: "text-center pt-2", orderable: false, searchable: false},
-            {data: 'matricule', className: "text-center pt-2"},
-            {data: 'firstName'},
-            {data: 'lastName'},
-            {data: 'genre', className: "text-center pt-2"},
-            {data: 'level', className: "text-center pt-2"},
-            {data: 'action', className: "text-center", orderable: false, searchable: false},
-        ],
-        pageLength: 10,
-        language: {
-            url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json"
-        }
-    });
+
 
     // On click Input Checkbox
     $(document).on('click', '.checkbox', function() {
-      $.ajax({
+        $checked = $(this).is(':checked') ? 1:0;
+        $.ajax({
             url: "{{ route('appel.store') }}",
             type: "GET",
             data: {
-                studnet: $(this).val(),
+                student: $(this).val(),
                 appel: $('#appel').val(),
-                val: $(this).is(':checked') ? 1:0
+                val: $checked
             },
-            success: function (response) {
-                console.log("Succès :", response);
-                alert(response.message);
-            },
-            error: function (xhr) {
-                console.log("Erreur :", xhr.responseText);
+            success: function (data) {
+                if(data == 200){
+                    alertify.set('notifier','position', 'top-right');
+                    $checked ? 
+                    alertify.success('<i class="ri-calendar-check-line mr2"></i> Absence pointée.'):
+                    alertify.success('<i class="ri-calendar-close-fill mr-2"></i> Absence annulée.');
+                }
+                else{
+                    alertify.set('notifier','position', 'top-right');
+                    alertify.error('Une erreur est survenue.');
+                }
             }
         });
     });
 
-
-    alertify.success('Opération réussie');
-
-  })
+})
 </script>
 @endsection
