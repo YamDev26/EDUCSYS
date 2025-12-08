@@ -133,7 +133,11 @@ class AppelController extends Controller
     public function show(string $id)
     {
         try{
-            return view('pages.appels.detail');
+            $gets = Appel::where('centre_student_id', $id)->orderBy('created')->get();
+            return view('pages.appels.detail',[
+                'datas' => $gets,
+                'student' => CentreStudent::find($id)
+            ]);
         }
         catch (\Exception $e) {
             return back()->with([
