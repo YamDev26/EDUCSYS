@@ -61,5 +61,6 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/list', [App\Http\Controllers\PayementController::class, 'listView'])->name('payement.list');
         Route::get('/edit', [App\Http\Controllers\PayementController::class, 'edit'])->name('payement.edit');
         Route::post('/edit', [App\Http\Controllers\PayementController::class, 'update'])->name('payement.update');
+        Route::get('/imprim', [App\Http\Controllers\PayementController::class, 'getPdf'])->name('payement.imprim');
     });
 });

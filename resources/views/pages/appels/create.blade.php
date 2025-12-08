@@ -27,9 +27,9 @@
                       <div class="card-title pb-0" style="font-size: 19px;">Appel Du <strong style="text-decoration: underline">{{ ucwords($date) }}</strong></div>
                       <div class="card-title pb-0" style="font-size: 19px;">Groupe {{ ucfirst($group) }}</div>
                       <div class="group-btn py-0" role="group" aria-label="Basic example">
-                          {{-- <a  href="{{ route('appel.create') }}" class="btn btn-soft-dark bg-gradient py-0">Add</a> --}}
                           <a href="{{ route('appel.index') }}" type="button" class="btn btn-soft-dark bg-gradient py-0">Back</a>
-                          <input type="hidden" id="appel" value="{{ $appel->id }}">
+                          <input type="hidden" id="created" value="{{ $created }}">
+                          <input type="hidden" id="period" value="{{ $group }}">
                       </div>
                    </div>
                 </div>
@@ -39,11 +39,12 @@
                             <tr>
                                 <th style="width: 5%"></th>
                                 <th class="text-center" style="width: 10%">Matricule</th>
-                                <th class="text-center" style="width: 15%">Nom</th>
-                                <th class="text-center">Prenoms</th>
-                                <th class="text-center" style="width: 15%">Genre</th>
-                                <th class="text-center" style="width: 15%">Niveau</th>
-                                <th class="text-center" style="width: 15%">Actions</th>
+                                <th class="text-center" style="width: 20%">Nom & Prenoms</th>
+                                <th class="text-center" style="width: 10%">Genre</th>
+                                <th class="text-center" style="width: 10%">Niveau</th>
+                                @foreach ($hourly as $item)
+                                    <th class="text-center" style="width: 10%">{{ $item->hourly }}</th>
+                                @endforeach
                             </tr>
                         </thead>
 
@@ -53,15 +54,18 @@
                                 <tr>
                                     <td class="text-center pt-2">{{ $i <= 9 ? '0'.++$i : ++$i }}</td>
                                     <td class="text-center pt-2">{{ $item->matricule }}</td>
-                                    <td>{{ strtoupper($item->first_name) }}</td>
-                                    <td>{{ ucwords($item->last_name) }}</td>
+                                    <td title="{{ strtoupper($item->first_name).' '.ucwords($item->last_name) }}">
+                                        {{ strtoupper($item->first_name).' '.Str::limit(ucwords($item->last_name), '25', '...') }}
+                                    </td>
                                     <td class="text-center pt-2">{{ ucwords($item->sexe == 'F' ? 'Feminin':'Masculin') }}</td>
                                     <td class="text-center pt-2">{{ $item->code }}</td>
-                                    <td class="text-center">
-                                        <div class="hstack gap-1 justify-content-center">
-                                            <input type="checkbox" class="checkbox" value="{{ $item->id }}">
-                                        </div>
-                                    </td>
+                                    @foreach ($hourly as $str)
+                                        <td class="text-center">
+                                            <div class="hstack gap-1 justify-content-center">
+                                                <input type="checkbox" class="checkbox" data-id={{ $item->id }} value="{{ $str->id }}" {{ $str->hasAppel($item->id, $str->id) ? 'checked':'' }}>
+                                            </div>
+                                        </td>
+                                    @endforeach
                                 </tr>
                             @endforeach
                         </tbody>
@@ -90,11 +94,14 @@
             url: "{{ route('appel.store') }}",
             type: "GET",
             data: {
-                student: $(this).val(),
-                appel: $('#appel').val(),
+                hourl: $(this).val(),
+                student: $(this).data('id'),
+                created: $('#created').val(),
+                period: $('#period').val(),
                 val: $checked
             },
             success: function (data) {
+                console.log(data);
                 if(data == 200){
                     alertify.set('notifier','position', 'top-right');
                     $checked ? 

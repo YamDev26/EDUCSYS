@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Appel;
+use App\Models\Hourly;
 use App\Models\SchoolYear;
-use App\Models\AppelStudent;
 use App\Models\CentreStudent;
-use Carbon\Carbon;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class AppelController extends Controller
 {
@@ -73,20 +73,21 @@ class AppelController extends Controller
             Carbon::setLocale('fr');
             $date = Carbon::parse($val['date']);
             $period = $this->getGroup($date, (int)$val['period']);
-            $appel = $this->getAppel($val['date'], $period);
-            if(!($appel == 'oui')){
-                $data = $this->getStudent(auth()->user()->centre_id ?? 1, $this->year(), $date, (int)$val['period']);            
+            $data = $this->getStudent(auth()->user()->centre_id ?? 1, $this->year(), $date, (int)$val['period']);
+            if(count($data)){
+                $hourlies = Hourly::where('period', ($val['period'] == 12 ? '1':'2'))->orderBy('id')->get();         
                 return view('pages.appels.create',[
                     'data' => $data,
-                    'appel' => $appel,
                     'group' => $period,
+                    'hourly' => $hourlies,
+                    'created' => $val['date'],
                     'date' => $date->isoFormat('D MMMM YYYY'),
                 ]);
             }
             else{
                 return back()->with([
                     'str' => 'warning',
-                    'msg' => 'Appel éffectué.'
+                    'msg' => 'Pas de formations disponible à cette date.'
                 ]);
             }
         }
@@ -105,15 +106,15 @@ class AppelController extends Controller
     {
         try{
             if($request['val']){
-                $val = AppelStudent::create([
-                    'student_id' => $request['student'],
-                    'appel_id' => $request['appel'],
-                    'school_year_id' => $this->year(),
-                    'centre_id' => auth()->user()->centre_id ?? 1
+                $val = Appel::create([
+                    'centre_student_id' => $request['student'],
+                    'hourlie_id' => $request['hourl'],
+                    'created' => $request['created'],
+                    'period' => $request['period']
                 ]);
             }
             else{
-                $val = AppelStudent::where('student_id', $request['student'])->where('appel_id', $request['appel'])->first();
+                $val = Appel::where('centre_student_id', $request['student'])->where('hourlie_id', $request['hourl'])->first();
                 $val->delete();
             }
             return ($val ? 200:201);
@@ -191,21 +192,6 @@ class AppelController extends Controller
             ((in_array($day, ['lundi', 'mardi']) && ($hour <= 12)) || (in_array($day, ['jeudi', 'vendredi']) && ($hour > 12))) => 'A',
             ((in_array($day, ['jeudi', 'vendredi']) && ($hour <= 12)) ||  (in_array($day, ['lundi', 'mardi']) && ($hour > 12))) => 'B'
         };
-    }
-
-
-    private function getAppel($date, $period){
-        $centre = auth()->user()->centre_id ?? 1;
-        $appel = Appel::where('created', $date)->where('period', $period)->where('centre_id', $centre)->where('school_year_id', $this->year())->count();
-        if(!$appel){
-            $data = Appel::create([
-                'created' => $date,
-                'period' => $period,
-                'centre_id' => $centre,
-                'school_year_id' => $this->year(),
-            ]);
-        }
-        return $appel ? 'oui':$data;
     }
 
 

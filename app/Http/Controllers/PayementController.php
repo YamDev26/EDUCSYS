@@ -9,9 +9,10 @@ use App\Models\SchoolYear;
 use App\Models\DayPayement;
 use App\Models\CentreStudent;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class PayementController extends Controller
 {
@@ -81,6 +82,58 @@ class PayementController extends Controller
             ]);
             $pdf->setPaper('A4', 'portrait');
             return $pdf->stream('reçu_de_payement.pdf');
+        }
+        catch (\Exception $e) {
+            return back()->with([
+                'str' => 'danger',
+                'msg' => 'Une erreur est survenue !'
+            ]);
+        }
+    }
+
+
+    public function getPdf(Request $request){
+        try{
+            $val = $request->validate([
+                'integer' => 'required|integer',
+                'value' => 'required|string'
+            ]);
+            if($val['integer'] == 1){
+                $data = DB::table('payements')
+                ->join('centre_students', 'centre_students.id', '=', 'payements.centre_student_id')
+                ->join('parametres', 'parametres.id', '=', 'payements.parametre_id')
+                ->join('students', 'students.id', '=', 'centre_students.student_id')
+                ->select('students.matricule', 'students.first_name', 'students.last_name', 'centre_students.group', 'parametres.libelle')
+                ->whereRaw('DATE_FORMAT(payements.created_at, "%Y-%m") = ?', $val['value'])
+                ->where('section_id', null)
+                ->orderBy('students.created_at')->get();
+
+               $date = Carbon::parse($val['value'])->locale('fr');
+               $value = 'Mensuel ' .$date->translatedFormat('F Y');
+            }
+            else{
+                $data = $data = DB::table('payements')
+                ->join('centre_students', 'centre_students.id', '=', 'payements.centre_student_id')
+                ->join('parametres', 'parametres.id', '=', 'payements.parametre_id')
+                ->join('students', 'students.id', '=', 'centre_students.student_id')
+                ->select('students.matricule', 'students.first_name', 'students.last_name', 'centre_students.group', 'parametres.libelle')
+                ->where('section_id', $val['value'])
+                ->orderBy('students.created_at')->get();
+                $value = 'section '.$val['value'];
+            }
+            if(!count($data)){
+                return back()->with([
+                    'str' => 'info',
+                    'msg' => 'Pas de paiement pour '.($val['integer'] == 1 ? 'Ce mois':'cette section')
+                ]);
+            }
+
+            $pdf = PDF::loadView('pdf.list_payement',[
+                'data' => $data,
+                'value' => $value
+            ]);
+            $pdf->setPaper('A4', 'portrait');
+            return $pdf->stream('list_de_payement.pdf');
         }
         catch (\Exception $e) {
             return back()->with([

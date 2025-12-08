@@ -15,10 +15,10 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->date('created');
             $table->enum('period', ['A','B']);
-            $table->unsignedBigInteger('centre_id');
-            $table->unsignedBigInteger('school_year_id');
-            $table->foreign('centre_id')->references('id')->on('centres')->onDelete('cascade');
-            $table->foreign('school_year_id')->references('id')->on('school_years')->onDelete('cascade');
+            $table->unsignedBigInteger('hourlie_id');
+            $table->unsignedBigInteger('centre_student_id');
+            $table->foreign('hourlie_id')->references('id')->on('hourlies')->onDelete('cascade');
+            $table->foreign('centre_student_id')->references('id')->on('centre_students')->onDelete('cascade');
             $table->timestamps();
         });
     }
