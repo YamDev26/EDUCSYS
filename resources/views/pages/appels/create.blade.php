@@ -62,7 +62,7 @@
                                     @foreach ($hourly as $str)
                                         <td class="text-center">
                                             <div class="hstack gap-1 justify-content-center">
-                                                <input type="checkbox" class="checkbox" data-id={{ $item->id }} value="{{ $str->id }}" {{ $str->hasAppel($item->id, $str->id) ? 'checked':'' }}>
+                                                <input type="checkbox" class="checkbox" data-id={{ $item->id }} value="{{ $str->id }}" {{ $str->hasAppel($item->id, $str->id, $created) ? 'checked':'' }}>
                                             </div>
                                         </td>
                                     @endforeach

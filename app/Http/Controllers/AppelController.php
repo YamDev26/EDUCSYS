@@ -7,6 +7,7 @@ use App\Models\Hourly;
 use App\Models\SchoolYear;
 use App\Models\CentreStudent;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -87,7 +88,7 @@ class AppelController extends Controller
             else{
                 return back()->with([
                     'str' => 'warning',
-                    'msg' => 'Pas de formations disponible à cette date.'
+                    'msg' => 'Programme non disponible à cette date.'
                 ]);
             }
         }
@@ -133,9 +134,8 @@ class AppelController extends Controller
     public function show(string $id)
     {
         try{
-            $gets = Appel::where('centre_student_id', $id)->orderBy('created')->get();
             return view('pages.appels.detail',[
-                'datas' => $gets,
+                'datas' => $this->getAppels($id),
                 'student' => CentreStudent::find($id)
             ]);
         }
@@ -148,30 +148,34 @@ class AppelController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Remove the specified resource from storage.
      */
-    public function edit(string $id)
+    private function getAppels($id)
     {
-        //
+        $data = DB::table('appels')
+        ->join('centre_students', 'centre_students.id', '=', 'appels.centre_student_id')
+        ->select('appels.id', 'appels.created')
+        ->where('appels.centre_student_id', '=', $id)
+        ->where('centre_students.school_year_id', '=', $this->year())
+        ->distinct('created')
+        ->get();
+        $table = []; $creaeted = null;
+        foreach($data as $item){
+            if(!($item->created == $creaeted)){
+                $table[] = [
+                    'created' => $item->created,
+                    'matin' => Appel::where('created', $item->created)->where('centre_student_id', $id)->where('period', 'A')->count(),
+                    'soir' => Appel::where('created', $item->created)->where('centre_student_id', $id)->where('period', 'B')->count()
+                ];
+                $creaeted = $item->created;
+            }
+        }
+        return $table;
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
-
-
     private function getStudent($centre, $year, $date = null, $period = null){
         $data = CentreStudent::join('students', 'students.id', '=', 'centre_students.student_id')
         ->join('levels', 'levels.id', '=', 'centre_students.level_id')
@@ -185,7 +189,9 @@ class AppelController extends Controller
         return $data;
     }
 
-
+    /**
+     * Show the form for editing the specified resource.
+     */
     private function getGroup($day1 = null, $hour1 = null){
 
         $date = Carbon::now();
@@ -194,7 +200,8 @@ class AppelController extends Controller
         $hour = $hour1 ? $hour1:$date->hour;
         return match(true){
             ((in_array($day, ['lundi', 'mardi']) && ($hour <= 12)) || (in_array($day, ['jeudi', 'vendredi']) && ($hour > 12))) => 'A',
-            ((in_array($day, ['jeudi', 'vendredi']) && ($hour <= 12)) ||  (in_array($day, ['lundi', 'mardi']) && ($hour > 12))) => 'B'
+            ((in_array($day, ['jeudi', 'vendredi']) && ($hour <= 12)) ||  (in_array($day, ['lundi', 'mardi']) && ($hour > 12))) => 'B',
+            default => null
         };
     }
 

@@ -13,11 +13,12 @@ class Hourly extends Model
         return $this->hasMany(Appel::class, 'hourlie_id', 'id');
     }
 
-    public function hasAppel($student, $hourly)
+    public function hasAppel($student, $hourly, $date)
     {
         return $this->appels()
         ->where('centre_student_id', $student)
         ->where('hourlie_id', $hourly)
+        ->where('created', $date)
         ->exists();
     }
 }

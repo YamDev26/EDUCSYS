@@ -31,7 +31,6 @@
                                     <button class="dropdown-item btnItem" data-value="2">Section</button>
                                 </div>
                             </div>
-                            {{-- <button type="button" class="btn btn-soft-dark bg-gradient py-0" id="btnImprim">imprim</button> --}}
                             <div class="py-0">
                                 <a  href="#" class="btn btn-soft-dark bg-gradient py-0">View</a>
                                 <a href="{{ route('dashboard') }}" class="btn btn-soft-dark bg-gradient py-0">Back</a>
@@ -124,7 +123,6 @@
         });
 
         $(".btnItem").on('click', function() {
-
             if($(this).data('value') == '1'){
                 const today = new Date();
                 const year = today.getFullYear();
@@ -133,7 +131,7 @@
 
                 $('#divSection, #services').hide(300);
                 $("input#periode").attr("name", "value");
-                $('#divPeriod').show(300);
+                $('#divPeriod, #periode').show(300);
                 $('#integer').val(1);
             }
             else if($(this).data('value') == '2'){
@@ -150,7 +148,7 @@
 
                 $('#divPeriod, #periode').hide(300);
                 $("select#services").attr("name", "value");
-                $('#divSection').show(300);
+                $('#divSection,  #services').show(300);
                 $('#integer').val(2);
             }
 

@@ -105,6 +105,7 @@ class PayementController extends Controller
                 ->join('students', 'students.id', '=', 'centre_students.student_id')
                 ->select('students.matricule', 'students.first_name', 'students.last_name', 'centre_students.group', 'parametres.libelle')
                 ->whereRaw('DATE_FORMAT(payements.created_at, "%Y-%m") = ?', $val['value'])
+                ->where('centre_students.school_year_id', $this->year())
                 ->where('section_id', null)
                 ->orderBy('students.created_at')->get();
 
@@ -117,14 +118,15 @@ class PayementController extends Controller
                 ->join('parametres', 'parametres.id', '=', 'payements.parametre_id')
                 ->join('students', 'students.id', '=', 'centre_students.student_id')
                 ->select('students.matricule', 'students.first_name', 'students.last_name', 'centre_students.group', 'parametres.libelle')
+                ->where('centre_students.school_year_id', $this->year())
                 ->where('section_id', $val['value'])
                 ->orderBy('students.created_at')->get();
                 $value = 'section '.$val['value'];
             }
             if(!count($data)){
                 return back()->with([
-                    'str' => 'info',
-                    'msg' => 'Pas de paiement pour '.($val['integer'] == 1 ? 'Ce mois':'cette section')
+                    'str' => 'warning',
+                    'msg' => 'Paiement non effectué pour '.($val['integer'] == 1 ? 'ce mois':'cette section')
                 ]);
             }
 
@@ -138,7 +140,7 @@ class PayementController extends Controller
         catch (\Exception $e) {
             return back()->with([
                 'str' => 'danger',
-                'msg' => 'Une erreur est survenue !'.$e->getMessage()
+                'msg' => 'Une erreur est survenue !'
             ]);
         }
     }

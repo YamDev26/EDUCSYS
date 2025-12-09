@@ -50,10 +50,9 @@
                             @foreach ($datas as $item)
                                 <tr>
                                     <td class="text-center pt-2">{{ $i <= 9 ? '0'.++$i : ++$i }}</td>
-                                    <td class="text-center pt-2">{{ date('d/m/Y', strtotime($item->created)) }}</td>
-                                    <td title="{{ strtoupper($item->first_name).' '.ucwords($item->last_name) }}">
-                                        {{ strtoupper($item->first_name).' '.Str::limit(ucwords($item->last_name), '25', '...') }}
-                                    <td class="text-center pt-2">{{ $item->code }}</td>
+                                    <td class="text-center pt-2">{{ date('d/m/Y', strtotime($item['created'])) }}</td>
+                                    <td class="text-center pt-2">{{ $item['matin'] <= 9 ? '0'.$item['matin'] : $item['matin'] }}</td>
+                                    <td class="text-center pt-2">{{ $item['soir'] <= 9 ? '0'.$item['soir'] : $item['soir'] }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
