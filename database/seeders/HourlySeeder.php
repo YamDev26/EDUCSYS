@@ -20,10 +20,10 @@ class HourlySeeder extends Seeder
         Hourly::create(['hourly' => '11:00', 'period' => '1']);
 
         // Gestion dee Hourly Apres Midi
+        Hourly::create(['hourly' => '13:30', 'period' => '2']);
         Hourly::create(['hourly' => '14:30', 'period' => '2']);
         Hourly::create(['hourly' => '15:30', 'period' => '2']);
         Hourly::create(['hourly' => '16:30', 'period' => '2']);
-        Hourly::create(['hourly' => '17:30', 'period' => '2']);
 
     }
 }
